@@ -1,0 +1,16 @@
+# Ignore Next.js build and dependencies
+sentinel/node_modules/
+sentinel/.next/
+sentinel/out/
+sentinel/build/
+sentinel/.env
+sentinel/.env.local
+sentinel/.env.development.local
+sentinel/.env.test.local
+sentinel/.env.production.local
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
+*.pem
