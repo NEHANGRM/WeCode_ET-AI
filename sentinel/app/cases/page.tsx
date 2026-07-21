@@ -282,7 +282,7 @@ export default function CasesPage() {
   const fetchCases = async () => {
     try {
       const url = filter === 'all' ? '/api/cases' : `/api/cases?status=${filter}`;
-      const res = await fetch(url);
+      const res = await fetch(url, { cache: 'no-store' });
       const data = await res.json();
       setCases(Array.isArray(data) ? data : []);
     } catch (e) {

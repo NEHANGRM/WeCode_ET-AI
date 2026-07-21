@@ -3,6 +3,8 @@ import { connectToDatabase } from '../../../lib/db/mongoose';
 import { AuditRecord } from '../../../lib/db/models/AuditRecord';
 import { verifyChain } from '../../../lib/hashChain';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const action = searchParams.get('action');

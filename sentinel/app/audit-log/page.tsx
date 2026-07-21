@@ -11,7 +11,7 @@ export default function AuditLogPage() {
   const [verifyResult, setVerifyResult] = useState<{ valid: boolean; brokenAt?: any } | null>(null);
 
   useEffect(() => {
-    fetch('/api/audit')
+    fetch('/api/audit', { cache: 'no-store' })
       .then(r => r.json())
       .then(data => setLogs(data))
       .catch(console.error);
@@ -21,7 +21,7 @@ export default function AuditLogPage() {
     setVerifying(true);
     setVerifyResult(null);
     try {
-      const res = await fetch('/api/audit?action=verify');
+      const res = await fetch('/api/audit?action=verify', { cache: 'no-store' });
       const data = await res.json();
       setVerifyResult(data);
     } catch (err) {
@@ -97,7 +97,7 @@ export default function AuditLogPage() {
                         {new Date(log.createdAt).toLocaleString()}
                       </td>
                       <td className="p-4 text-gray-300 font-mono text-xs">
-                        {log.eventId?.toString().substring(0,8)}...
+                        {typeof log.eventId === 'string' ? log.eventId.substring(0, 8) : (log.eventId?._id || log.eventId?.id || 'unknown').toString().substring(0, 8)}...
                       </td>
                       <td className="p-4 font-medium text-blue-400">
                         {log.payload.agent}

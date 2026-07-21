@@ -39,11 +39,11 @@ export default function DashboardPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ip: '185.150.11.23',
-          protocol: 'TCP/SYN',
-          payloadSummary: 'High frequency SYN flood targeting OT Gateway — 47,000 packets/sec',
-          reasonCode: 'RATE_LIMIT_EXCEEDED',
-          event_type: 'ddos'
+          ip: '103.228.112.0',
+          protocol: 'SMB',
+          payloadSummary: 'Repeated SMB access denied errors from HR workstation attempting to access domain controller C$ share. Possible lateral movement attempt.',
+          reasonCode: 'POTENTIAL_LATERAL_MOVEMENT',
+          event_type: 'lateral_movement'
         })
       });
     } catch (err) {
@@ -67,16 +67,16 @@ export default function DashboardPage() {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <h2 className="text-2xl font-bold tracking-wide text-white">Live Operations</h2>
-              <div className={`flex items-center gap-2 text-sm text-gray-400 bg-white/5 px-3 py-1.5 rounded-full border ${isConnected ? 'border-green-500/30 text-green-400' : 'border-red-500/30 text-red-400'}`}>
+              <h2 className="text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">Live Operations</h2>
+              <div className={`flex items-center gap-2 text-sm text-gray-400 bg-white/5 px-3 py-1.5 rounded-full border shadow-lg ${isConnected ? 'border-green-500/50 text-green-400 glow-border-active' : 'border-red-500/50 text-red-400 glow-border-red'}`}>
                 <Activity className={`w-4 h-4 ${isConnected ? 'animate-pulse' : ''}`} />
-                <span className="text-xs">{isConnected ? 'LIVE' : 'DISCONNECTED'}</span>
+                <span className="text-xs font-bold tracking-widest">{isConnected ? 'LIVE' : 'DISCONNECTED'}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
               {simStatus && (
-                <span className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-full">
+                <span className="text-xs font-bold tracking-wide text-amber-300 bg-amber-500/10 border border-amber-500/40 px-4 py-2 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.2)]">
                   {simStatus}
                 </span>
               )}
@@ -85,8 +85,9 @@ export default function DashboardPage() {
                 disabled={simulating}
                 variant="danger"
                 size="sm"
-                className="gap-2 font-semibold"
+                className="relative overflow-hidden group gap-2 font-bold px-5 py-2 hover:shadow-[0_0_20px_rgba(239,68,68,0.6)] transition-all duration-300"
               >
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-white/20 to-red-600/0 -translate-x-full group-hover:animate-[cyber-flow_1.5s_ease-in-out_infinite]" />
                 <Play className="w-4 h-4" />
                 Replay AIIMS Delhi Attack
               </Button>
@@ -95,10 +96,10 @@ export default function DashboardPage() {
                 disabled={simulating}
                 variant="ghost"
                 size="sm"
-                className="gap-2 text-gray-400"
+                className="gap-2 text-gray-300 hover:text-white hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 border border-transparent hover:border-white/20"
               >
                 <Zap className="w-4 h-4" />
-                Single Event
+                Ambiguous Event
               </Button>
             </div>
           </div>

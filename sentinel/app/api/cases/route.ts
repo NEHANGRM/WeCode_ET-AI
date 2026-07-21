@@ -6,6 +6,8 @@ import { Judgment } from '../../../lib/db/models/Judgment';
 import { Action } from '../../../lib/db/models/Action';
 import { AuditRecord } from '../../../lib/db/models/AuditRecord';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request) {
   await connectToDatabase();
 

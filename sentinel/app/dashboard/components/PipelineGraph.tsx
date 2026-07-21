@@ -146,7 +146,7 @@ export function PipelineGraph() {
             >
               <p className="text-xs text-gray-500 font-mono">
                 <span className="text-blue-400">EVENT</span>{' '}
-                {state.pipelineData.eventId?.toString()?.substring(0, 16)}...{' '}
+                {typeof state.pipelineData.eventId === 'string' ? state.pipelineData.eventId.substring(0, 16) : (state.pipelineData.eventId?._id || state.pipelineData.eventId?.id || 'unknown').toString().substring(0, 16)}...{' '}
                 {state.pipelineData.ip && <span>| <span className="text-white">{state.pipelineData.ip}</span></span>}
                 {state.pipelineData.reasonCode && <span>| <span className="text-amber-400">{state.pipelineData.reasonCode}</span></span>}
               </p>

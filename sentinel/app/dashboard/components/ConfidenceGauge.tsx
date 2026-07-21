@@ -65,7 +65,7 @@ export function ConfidenceGauge({ score, pipelineStage }: ConfidenceGaugeProps) 
               initial={{ strokeDashoffset: circumference }}
               animate={{ strokeDashoffset: circumference - progress }}
               transition={{ duration: 1.2, ease: 'easeOut' }}
-              style={{ filter: score !== null && score > 40 ? `drop-shadow(0 0 6px ${colors.stroke})` : 'none' }}
+              style={{ filter: score !== null ? `drop-shadow(0 0 ${score > 80 ? '20px' : score > 40 ? '10px' : '5px'} ${colors.stroke})` : 'none' }}
             />
           </svg>
 

@@ -4,6 +4,8 @@ import { Event } from '../../../lib/db/models/Event';
 import { Judgment } from '../../../lib/db/models/Judgment';
 import { Action } from '../../../lib/db/models/Action';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   await connectToDatabase();
 

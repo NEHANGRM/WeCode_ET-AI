@@ -40,7 +40,12 @@ export function EventCard({ event }: { event: any }) {
       animate={{ opacity: 1, x: 0 }}
       layout
     >
-      <GlassPanel className="mb-0">
+      <GlassPanel className={`mb-0 transition-all duration-300 ${
+        event.status === 'responded' ? 'hover:shadow-[0_0_20px_rgba(34,197,94,0.15)] border-l-4 border-l-green-500' :
+        event.status === 'judged' ? 'hover:shadow-[0_0_20px_rgba(245,158,11,0.15)] border-l-4 border-l-amber-500' :
+        event.status === 'closed' ? 'hover:shadow-[0_0_15px_rgba(255,255,255,0.05)] border-l-4 border-l-gray-600' :
+        'hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] border-l-4 border-l-red-500'
+      }`}>
         {/* Main row */}
         <div
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer"

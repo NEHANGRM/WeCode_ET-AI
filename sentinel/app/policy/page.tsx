@@ -9,7 +9,7 @@ export default function PolicyPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/policy')
+    fetch('/api/policy', { cache: 'no-store' })
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false); })
       .catch(e => { console.error(e); setLoading(false); });

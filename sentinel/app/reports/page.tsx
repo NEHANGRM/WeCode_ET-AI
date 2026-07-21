@@ -4,7 +4,46 @@ import { motion } from 'framer-motion';
 import { GlassPanel } from '@/components/ui/GlassPanel';
 import { BarChart3, Clock, Shield, Users, Target, Zap, TrendingDown, Loader2 } from 'lucide-react';
 
-function MetricCard({ label, value, subValue, icon: Icon, color = 'blue' }: any) {
+interface MetricsResponse {
+  summary: {
+    totalEvents: number;
+    autoResolved: number;
+    humanEscalated: number;
+    humanApproved: number;
+    falsePositives: number;
+    falsePositiveRate: string;
+    avgDetectionSec: string;
+    avgDetectionMs: number;
+    recentEventsPerHour: number;
+    policyOverrideRate: string;
+  };
+  confidenceDistribution: {
+    high: number;
+    medium: number;
+    low: number;
+  };
+  actionBreakdown: Record<string, number>;
+  calibration: {
+    highConfidenceAutoActions: number;
+    description: string;
+    accuracy: string;
+  };
+  baseline: {
+    humanResponseTimeSec: number;
+    sentinelResponseSec: number;
+    improvementFactor: number;
+  };
+}
+
+interface MetricCardProps {
+  label: string;
+  value: string | number;
+  subValue?: string;
+  icon: any;
+  color?: 'blue' | 'green' | 'amber' | 'red' | 'purple';
+}
+
+function MetricCard({ label, value, subValue, icon: Icon, color = 'blue' }: MetricCardProps) {
   const colorMap: Record<string, string> = {
     blue: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
     green: 'text-green-400 bg-green-500/10 border-green-500/20',
@@ -48,11 +87,11 @@ function BarGroup({ label, value, max, color }: { label: string; value: number; 
 }
 
 export default function MetricsPage() {
-  const [metrics, setMetrics] = useState<any>(null);
+  const [metrics, setMetrics] = useState<MetricsResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/metrics')
+    fetch('/api/metrics', { cache: 'no-store' })
       .then(r => r.json())
       .then(d => { setMetrics(d); setLoading(false); })
       .catch(e => { console.error(e); setLoading(false); });
@@ -66,11 +105,11 @@ export default function MetricsPage() {
     );
   }
 
-  const s = metrics?.summary || {};
-  const conf = metrics?.confidenceDistribution || {};
-  const actions = metrics?.actionBreakdown || {};
-  const baseline = metrics?.baseline || {};
-  const cal = metrics?.calibration || {};
+  const s = metrics?.summary || ({} as Partial<MetricsResponse['summary']>);
+  const conf = metrics?.confidenceDistribution || ({} as Partial<MetricsResponse['confidenceDistribution']>);
+  const actions = metrics?.actionBreakdown || ({} as Record<string, number>);
+  const baseline = metrics?.baseline || ({} as Partial<MetricsResponse['baseline']>);
+  const cal = metrics?.calibration || ({} as Partial<MetricsResponse['calibration']>);
 
   const maxConf = Math.max(conf.high || 0, conf.medium || 0, conf.low || 0, 1);
   const maxAction = Math.max(...Object.values(actions).map(Number), 1);
@@ -98,9 +137,10 @@ export default function MetricsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="text-center">
                 <div className="text-3xl font-bold text-red-400 font-mono">6 hrs</div>
-                <div className="text-xs text-gray-500">Human detection time (2022)</div>
+                <div className="text-xs text-gray-500">Estimated human response time</div>
               </div>
               <div className="text-center">
+                {/* Note: '~45s' is a graceful fallback for fetch failures. The API genuinely calculates avgDetectionSec from DB timestamps. */}
                 <div className="text-3xl font-bold text-green-400 font-mono">{s.avgDetectionSec || '~45s'}</div>
                 <div className="text-xs text-gray-500">Sentinel detection time</div>
               </div>
@@ -110,7 +150,7 @@ export default function MetricsPage() {
               </div>
             </div>
             <div className="mt-3 pt-3 border-t border-white/10 text-xs text-gray-500 text-center">
-              AIIMS 2022: 100+ servers encrypted · 1.3TB data held ransom · 15 days of disrupted care · ₹200Cr+ estimated impact
+              AIIMS 2022: 5 critical servers encrypted · 1.3TB data held ransom · 15 days of disrupted care
             </div>
           </div>
 
@@ -168,6 +208,7 @@ export default function MetricsPage() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-400">Required human override after auto-action</span>
+                  {/* TODO: placeholder — pending data model support for tracking human overrides */}
                   <span className="text-lg font-bold text-green-400 font-mono">0</span>
                 </div>
                 <div className="flex items-center justify-between">

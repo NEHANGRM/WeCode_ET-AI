@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #0a0a0f;
+  --color-background: #030305;
   --color-foreground: #ededed;
   
-  --color-panel: rgba(255,255,255,0.05);
-  --color-border-glass: rgba(255,255,255,0.10);
+  --color-panel: rgba(10, 15, 30, 0.4);
+  --color-border-glass: rgba(255, 255, 255, 0.08);
   
   --color-accent: #3b82f6;
   --color-accent-green: #22c55e;
@@ -26,18 +26,42 @@ body {
   @apply antialiased;
 }
 
+/* Premium Animations */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 35px rgba(239, 68, 68, 0.8); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes cyber-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
 }
+
+/* Glowing utilities */
+.glow-text-red { text-shadow: 0 0 10px rgba(239, 68, 68, 0.8); }
+.glow-text-green { text-shadow: 0 0 10px rgba(34, 197, 94, 0.8); }
+.glow-text-blue { text-shadow: 0 0 10px rgba(59, 130, 246, 0.8); }
+.glow-border-red { box-shadow: 0 0 15px rgba(239, 68, 68, 0.3), inset 0 0 10px rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.5); }
+.glow-border-active { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); border-color: rgba(59, 130, 246, 0.5); }

@@ -23,7 +23,7 @@ app.prepare().then(() => {
 
   const io = new SocketIOServer(httpServer, {
     cors: {
-      origin: '*',
+      origin: 'http://localhost:3000',
       methods: ['GET', 'POST']
     }
   });
