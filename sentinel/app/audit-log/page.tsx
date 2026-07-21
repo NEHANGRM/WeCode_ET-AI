@@ -66,7 +66,7 @@ export default function AuditLogPage() {
                     <h3 className={`text-lg font-bold ${verifyResult.valid ? 'text-emerald-700' : 'text-red-700'}`}>
                       {verifyResult.valid ? 'Chain Verified Successfully' : 'INTEGRITY VIOLATION DETECTED'}
                     </h3>
-                    <p className="text-[var(--color-text-secondary)] mt-1">
+                    <p className={`mt-1 font-medium ${verifyResult.valid ? 'text-emerald-800' : 'text-red-800'}`}>
                       {verifyResult.valid 
                         ? 'All cryptographic hashes match. No records have been altered.'
                         : `Hash chain broken at index ${verifyResult.brokenAt?.index} for event ${verifyResult.brokenAt?.eventId}. A record was tampered with.`

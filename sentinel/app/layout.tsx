@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sentinel | Cyber-Defense",
-  description: "Autonomous AI cyber-defense pipeline for critical infrastructure",
+  title: "Warden | Cyber-Defense",
+  description: "Autonomous Cyber Defense System",
 };
 
 export default function RootLayout({

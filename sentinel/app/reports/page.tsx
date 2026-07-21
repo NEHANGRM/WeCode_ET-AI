@@ -142,7 +142,7 @@ export default function MetricsPage() {
               <div className="text-center">
                 {/* Note: '~45s' is a graceful fallback for fetch failures. The API genuinely calculates avgDetectionSec from DB timestamps. */}
                 <div className="text-3xl font-bold text-emerald-400 font-mono">{s.avgDetectionSec || '~45s'}</div>
-                <div className="text-xs text-[var(--color-text-muted)]">Sentinel detection time</div>
+                <div className="text-xs text-[var(--color-text-muted)]">Warden detection time</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-[var(--color-accent)] font-mono">{improvementFactor}×</div>

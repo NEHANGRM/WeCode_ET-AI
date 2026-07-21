@@ -110,7 +110,7 @@ export default function DashboardPage() {
               <p className="text-sm font-semibold text-red-400">Demo Scenario: AIIMS Delhi Ransomware (Nov 2022)</p>
               <p className="text-xs text-[var(--color-text-secondary)] mt-1">
                 Real incident: 100+ servers encrypted, 1.3TB data held ransom, critical patient care disrupted for 15 days.
-                Estimated impact: ₹200Cr+. Detection time: ~6 hours. <span className="text-emerald-400 font-medium">Sentinel detects the same attack in under 60 seconds.</span>
+                Estimated impact: ₹200Cr+. Detection time: ~6 hours. <span className="text-emerald-400 font-medium">Warden detects the same attack in under 60 seconds.</span>
               </p>
             </div>
           </div>
