@@ -20,7 +20,17 @@ To guarantee you can test the **Human Review Queue** UI, the `Judge` agent is ha
 
 Because the score falls between 40 and 80, the strict code-enforced pipeline will flag the event as `suspicious` and route it to your **Human Review Queue**, waiting for you to manually click "Approve" or "Dismiss".
 
-## 3. Database Reset
+## 3. Threat Intelligence Simulations
+To ensure the pipeline functions seamlessly out-of-the-box without requiring 3rd-party API keys, Sentinel uses **simulated fallback data** for Threat Intelligence integrations.
+
+When the `Investigator` agent runs, it attempts to fetch data from:
+- **GreyNoise** (Internet background noise / targeted attack classification)
+- **AbuseIPDB** (Malicious IP reputation scoring)
+- **VirusTotal** (Malicious file/IP engine detections)
+
+If the respective API keys (e.g., `GREYNOISE_KEY`) are not found in the `.env` file, the system automatically falls back to hardcoded mock responses. For example, in the AIIMS replay, the attacker IP `185.150.11.23` is simulated to return a `malicious` classification from GreyNoise and a high abuse score to accurately trigger the Judge's threat response.
+
+## 4. Database Reset
 If your dashboard gets too cluttered with events, you can wipe the MongoDB cluster and re-seed it with the baseline data by running:
 ```bash
 node migrate.js
