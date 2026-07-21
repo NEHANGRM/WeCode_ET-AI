@@ -14,9 +14,9 @@ export function ConfidenceGauge({ score, pipelineStage }: ConfidenceGaugeProps) 
   const isProcessing = pipelineStage !== 'idle' && pipelineStage !== 'record';
 
   const getColor = (s: number) => {
-    if (s > 80) return { stroke: '#ef4444', text: 'text-red-400', label: 'CONFIRMED ATTACK', bg: 'bg-red-500/10 border-red-500/30' };
-    if (s >= 40) return { stroke: '#f59e0b', text: 'text-amber-400', label: 'SUSPICIOUS', bg: 'bg-amber-500/10 border-amber-500/30' };
-    return { stroke: '#22c55e', text: 'text-green-400', label: 'BENIGN', bg: 'bg-green-500/10 border-green-500/30' };
+    if (s > 80) return { stroke: '#ef4444', text: 'text-red-400', label: 'CONFIRMED ATTACK', bg: 'bg-red-500/10 border-red-500/20' };
+    if (s >= 40) return { stroke: '#f59e0b', text: 'text-amber-400', label: 'SUSPICIOUS', bg: 'bg-amber-500/10 border-amber-500/20' };
+    return { stroke: '#22c55e', text: 'text-emerald-400', label: 'BENIGN', bg: 'bg-emerald-500/10 border-emerald-500/20' };
   };
 
   const displayScore = score ?? 0;
@@ -65,7 +65,7 @@ export function ConfidenceGauge({ score, pipelineStage }: ConfidenceGaugeProps) 
               initial={{ strokeDashoffset: circumference }}
               animate={{ strokeDashoffset: circumference - progress }}
               transition={{ duration: 1.2, ease: 'easeOut' }}
-              style={{ filter: score !== null ? `drop-shadow(0 0 ${score > 80 ? '20px' : score > 40 ? '10px' : '5px'} ${colors.stroke})` : 'none' }}
+              style={{ filter: score !== null ? `drop-shadow(0 0 ${score > 80 ? '12px' : score > 40 ? '6px' : '3px'} ${colors.stroke})` : 'none' }}
             />
           </svg>
 
@@ -76,7 +76,7 @@ export function ConfidenceGauge({ score, pipelineStage }: ConfidenceGaugeProps) 
                 {[0, 1, 2].map(i => (
                   <motion.div
                     key={i}
-                    className="w-1.5 h-1.5 bg-blue-400 rounded-full"
+                    className="w-1.5 h-1.5 bg-[var(--color-accent)] rounded-full"
                     animate={{ opacity: [0.3, 1, 0.3] }}
                     transition={{ repeat: Infinity, duration: 1.2, delay: i * 0.2 }}
                   />
@@ -85,7 +85,7 @@ export function ConfidenceGauge({ score, pipelineStage }: ConfidenceGaugeProps) 
             ) : (
               <motion.span
                 key={displayScore}
-                className={`text-3xl font-bold font-mono ${score !== null ? colors.text : 'text-gray-600'}`}
+                className={`text-3xl font-bold font-mono ${score !== null ? colors.text : 'text-[var(--color-text-muted)]'}`}
                 initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
               >
@@ -108,7 +108,7 @@ export function ConfidenceGauge({ score, pipelineStage }: ConfidenceGaugeProps) 
         )}
 
         {/* Pipeline stage */}
-        <div className="text-xs text-gray-500 font-mono text-center">
+        <div className="text-xs text-[var(--color-text-muted)] font-mono text-center">
           {stageLabels[pipelineStage]}
           {isProcessing && (
             <motion.span
@@ -120,10 +120,10 @@ export function ConfidenceGauge({ score, pipelineStage }: ConfidenceGaugeProps) 
 
         {/* Threshold markers */}
         <div className="flex justify-between w-full mt-3 px-2">
-          <span className="text-xs text-green-500 font-mono">0</span>
-          <span className="text-xs text-amber-500 font-mono">40</span>
-          <span className="text-xs text-red-500 font-mono">80</span>
-          <span className="text-xs text-red-500 font-mono">100</span>
+          <span className="text-xs text-emerald-400 font-mono">0</span>
+          <span className="text-xs text-amber-400 font-mono">40</span>
+          <span className="text-xs text-red-400 font-mono">80</span>
+          <span className="text-xs text-red-400 font-mono">100</span>
         </div>
       </div>
     </GlassPanel>

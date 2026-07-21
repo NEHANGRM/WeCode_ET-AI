@@ -51,17 +51,17 @@ export function PipelineGraph() {
     <GlassPanel title="Agent Pipeline" className="mb-0">
       <div className="relative py-6 px-2 md:px-6">
 
-        {/* Desktop: horizontal connector line */}
-        <div className="hidden md:block absolute top-[50%] left-16 right-16 h-px bg-white/10 -translate-y-1/2 z-0" />
+        {/* Progress bar background */}
+        <div className="hidden md:block absolute bottom-0 left-6 right-6 h-1 bg-white/10 rounded-full z-0" />
 
-        {/* Animated active fill line */}
+        {/* Animated active progress fill */}
         <motion.div
-          className="hidden md:block absolute top-[50%] left-16 h-px bg-blue-500 -translate-y-1/2 z-0"
-          style={{ boxShadow: '0 0 8px rgba(59,130,246,0.6)' }}
+          className="hidden md:block absolute bottom-0 left-6 h-1 bg-[var(--color-accent)] rounded-full z-0"
+          style={{ boxShadow: '0 0 8px rgba(138,88,252,0.4)' }}
           initial={{ width: '0%' }}
           animate={{
             width: activeIndex >= 0
-              ? `${(activeIndex / (NODES.length - 1)) * (100 - 16)}%`
+              ? `${(activeIndex / (NODES.length - 1)) * 100}%`
               : '0%'
           }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
@@ -72,7 +72,6 @@ export function PipelineGraph() {
             const Icon = node.icon;
             const isActive = node.id === currentNode;
             const isDone = completedNodes.includes(node.id);
-            const isIdle = !isActive && !isDone;
 
             return (
               <div key={node.id} className="flex md:flex-col items-center gap-3 md:gap-2 w-full md:w-auto relative">
@@ -86,10 +85,10 @@ export function PipelineGraph() {
                 <motion.div
                   className={`relative z-10 w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-500 flex-shrink-0 ${
                     isActive
-                      ? 'border-blue-500 bg-blue-500/20 text-blue-400'
+                      ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/15 text-[var(--color-accent)]'
                       : isDone
-                      ? 'border-green-500 bg-green-500/15 text-green-400'
-                      : 'border-white/15 bg-[#0a0a0f] text-gray-600'
+                      ? 'border-emerald-500 bg-emerald-500/10 text-emerald-400'
+                      : 'border-white/10 bg-white/5 text-[var(--color-text-muted)]'
                   }`}
                   animate={isActive ? { scale: [1, 1.08, 1] } : { scale: 1 }}
                   transition={isActive ? { repeat: Infinity, duration: 2 } : {}}
@@ -99,7 +98,7 @@ export function PipelineGraph() {
                   {/* Pulse ring */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 rounded-full border-2 border-blue-400"
+                      className="absolute inset-0 rounded-full border-2 border-[var(--color-accent)]"
                       animate={{ scale: [1, 1.7], opacity: [0.6, 0] }}
                       transition={{ repeat: Infinity, duration: 1.5 }}
                     />
@@ -108,11 +107,11 @@ export function PipelineGraph() {
 
                 {/* Label */}
                 <div className="flex-1 md:flex-none md:text-center">
-                  <p className={`text-sm font-semibold ${isActive ? 'text-blue-400' : isDone ? 'text-green-400' : 'text-gray-500'}`}>
+                  <p className={`text-sm font-semibold ${isActive ? 'text-[var(--color-accent)]' : isDone ? 'text-emerald-400' : 'text-gray-300'}`}>
                     {node.label}
                   </p>
-                  <p className="text-xs text-gray-600 hidden md:block mt-0.5">{node.subLabel}</p>
-                  <p className={`text-xs font-mono mt-0.5 md:hidden ${isActive ? 'text-blue-500' : isDone ? 'text-green-500' : 'text-gray-600'}`}>
+                  <p className="text-xs text-[var(--color-text-muted)] hidden md:block mt-0.5">{node.subLabel}</p>
+                  <p className={`text-xs font-mono mt-0.5 md:hidden ${isActive ? 'text-[var(--color-accent)]' : isDone ? 'text-emerald-400' : 'text-gray-400'}`}>
                     {isActive ? '● ACTIVE' : isDone ? '✓ DONE' : '○ WAIT'}
                   </p>
                 </div>
@@ -124,7 +123,7 @@ export function PipelineGraph() {
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className={`text-xs font-mono hidden md:block ${isActive ? 'text-blue-500' : isDone ? 'text-green-500' : 'text-gray-700'}`}
+                    className={`text-xs font-mono hidden md:block ${isActive ? 'text-[var(--color-accent)]' : isDone ? 'text-emerald-400' : 'text-gray-400'}`}
                   >
                     {isActive ? '▶ PROCESSING' : isDone ? '✓ COMPLETE' : '○ WAITING'}
                   </motion.p>
@@ -142,13 +141,13 @@ export function PipelineGraph() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="mt-4 pt-4 border-t border-white/5 overflow-hidden"
+              className="mt-6 pt-4 border-t border-white/10 overflow-hidden"
             >
-              <p className="text-xs text-gray-500 font-mono">
-                <span className="text-blue-400">EVENT</span>{' '}
+              <p className="text-xs text-[var(--color-text-muted)] font-mono">
+                <span className="text-[var(--color-accent)]">EVENT</span>{' '}
                 {typeof state.pipelineData.eventId === 'string' ? state.pipelineData.eventId.substring(0, 16) : (state.pipelineData.eventId?._id || state.pipelineData.eventId?.id || 'unknown').toString().substring(0, 16)}...{' '}
-                {state.pipelineData.ip && <span>| <span className="text-white">{state.pipelineData.ip}</span></span>}
-                {state.pipelineData.reasonCode && <span>| <span className="text-amber-400">{state.pipelineData.reasonCode}</span></span>}
+                {state.pipelineData.ip && <span>| <span className="text-[var(--color-text-primary)]">{state.pipelineData.ip}</span></span>}
+                {state.pipelineData.reasonCode && <span>| <span className="text-amber-600">{state.pipelineData.reasonCode}</span></span>}
               </p>
             </motion.div>
           </AnimatePresence>

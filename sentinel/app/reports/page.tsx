@@ -46,7 +46,7 @@ interface MetricCardProps {
 function MetricCard({ label, value, subValue, icon: Icon, color = 'blue' }: MetricCardProps) {
   const colorMap: Record<string, string> = {
     blue: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-    green: 'text-green-400 bg-green-500/10 border-green-500/20',
+    green: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
     amber: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
     red: 'text-red-400 bg-red-500/10 border-red-500/20',
     purple: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
@@ -56,7 +56,7 @@ function MetricCard({ label, value, subValue, icon: Icon, color = 'blue' }: Metr
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`rounded-xl p-4 border ${colorMap[color]} flex flex-col gap-2`}
+      className={`rounded-2xl p-4 border backdrop-blur-sm ${colorMap[color]} flex flex-col gap-2 shadow-sm`}
     >
       <div className="flex items-center gap-2">
         <Icon className="w-4 h-4" />
@@ -72,8 +72,8 @@ function BarGroup({ label, value, max, color }: { label: string; value: number; 
   const pct = max > 0 ? (value / max) * 100 : 0;
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs text-gray-500 font-mono w-28 shrink-0 text-right">{label}</span>
-      <div className="flex-1 bg-white/5 rounded-full h-3 overflow-hidden">
+      <span className="text-xs text-[var(--color-text-muted)] font-mono w-28 shrink-0 text-right">{label}</span>
+      <div className="flex-1 bg-black/5 rounded-full h-3 overflow-hidden">
         <motion.div
           className={`h-full rounded-full ${color}`}
           initial={{ width: 0 }}
@@ -81,7 +81,7 @@ function BarGroup({ label, value, max, color }: { label: string; value: number; 
           transition={{ duration: 1, ease: 'easeOut' }}
         />
       </div>
-      <span className="text-xs font-mono text-gray-400 w-6 text-right">{value}</span>
+      <span className="text-xs font-mono text-[var(--color-text-secondary)] w-6 text-right">{value}</span>
     </div>
   );
 }
@@ -100,7 +100,7 @@ export default function MetricsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-400" />
+        <Loader2 className="w-8 h-8 animate-spin text-[var(--color-accent)]" />
       </div>
     );
   }
@@ -122,34 +122,34 @@ export default function MetricsPage() {
         <div className="max-w-7xl mx-auto space-y-8">
 
           <div>
-            <h2 className="text-2xl font-bold tracking-wide text-white flex items-center gap-3">
-              <BarChart3 className="w-6 h-6 text-blue-400" />
+            <h2 className="text-2xl font-bold tracking-wide text-[var(--color-text-primary)] flex items-center gap-3">
+              <BarChart3 className="w-6 h-6 text-[var(--color-accent)]" />
               Metrics & Impact
             </h2>
-            <p className="text-gray-500 text-sm mt-1">
+            <p className="text-[var(--color-text-muted)] text-sm mt-1">
               Live statistics from this session. Baseline comparison: AIIMS Delhi 2022 incident.
             </p>
           </div>
 
           {/* Baseline comparison banner */}
-          <div className="bg-gradient-to-r from-blue-950/40 to-purple-950/40 border border-blue-500/20 rounded-xl p-5">
-            <h3 className="text-sm font-semibold text-blue-300 mb-3">vs. AIIMS Delhi 2022 Baseline</h3>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-5 shadow-sm">
+            <h3 className="text-sm font-semibold text-[var(--color-accent)] mb-3">vs. AIIMS Delhi 2022 Baseline</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="text-center">
                 <div className="text-3xl font-bold text-red-400 font-mono">6 hrs</div>
-                <div className="text-xs text-gray-500">Estimated human response time</div>
+                <div className="text-xs text-[var(--color-text-muted)]">Estimated human response time</div>
               </div>
               <div className="text-center">
                 {/* Note: '~45s' is a graceful fallback for fetch failures. The API genuinely calculates avgDetectionSec from DB timestamps. */}
-                <div className="text-3xl font-bold text-green-400 font-mono">{s.avgDetectionSec || '~45s'}</div>
-                <div className="text-xs text-gray-500">Sentinel detection time</div>
+                <div className="text-3xl font-bold text-emerald-400 font-mono">{s.avgDetectionSec || '~45s'}</div>
+                <div className="text-xs text-[var(--color-text-muted)]">Sentinel detection time</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-400 font-mono">{improvementFactor}×</div>
-                <div className="text-xs text-gray-500">Speed improvement</div>
+                <div className="text-3xl font-bold text-[var(--color-accent)] font-mono">{improvementFactor}×</div>
+                <div className="text-xs text-[var(--color-text-muted)]">Speed improvement</div>
               </div>
             </div>
-            <div className="mt-3 pt-3 border-t border-white/10 text-xs text-gray-500 text-center">
+            <div className="mt-3 pt-3 border-t border-white/10 text-xs text-[var(--color-text-muted)] text-center">
               AIIMS 2022: 5 critical servers encrypted · 1.3TB data held ransom · 15 days of disrupted care
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function MetricsPage() {
               <div className="space-y-3 py-2">
                 <BarGroup label="> 80 (confirmed)" value={conf.high || 0} max={maxConf} color="bg-red-500" />
                 <BarGroup label="40–80 (suspicious)" value={conf.medium || 0} max={maxConf} color="bg-amber-500" />
-                <BarGroup label="< 40 (benign)" value={conf.low || 0} max={maxConf} color="bg-green-500" />
+                <BarGroup label="< 40 (benign)" value={conf.low || 0} max={maxConf} color="bg-emerald-500" />
               </div>
             </GlassPanel>
 
@@ -178,7 +178,7 @@ export default function MetricsPage() {
             <GlassPanel title="Actions Taken" icon={<Zap className="w-4 h-4" />}>
               <div className="space-y-3 py-2">
                 {Object.entries(actions).length === 0 ? (
-                  <p className="text-sm text-gray-600 text-center py-4">No actions yet — run the AIIMS replay.</p>
+                  <p className="text-sm text-[var(--color-text-muted)] text-center py-4">No actions yet — run the AIIMS replay.</p>
                 ) : (
                   Object.entries(actions).map(([action, count]) => (
                     <BarGroup
@@ -203,19 +203,19 @@ export default function MetricsPage() {
             <GlassPanel title="Judge Calibration" icon={<BarChart3 className="w-4 h-4" />}>
               <div className="py-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-400">Auto-actions with confidence &gt;80</span>
-                  <span className="text-lg font-bold text-green-400 font-mono">{cal.highConfidenceAutoActions || 0}</span>
+                  <span className="text-sm text-[var(--color-text-secondary)]">Auto-actions with confidence &gt;80</span>
+                  <span className="text-lg font-bold text-emerald-400 font-mono">{cal.highConfidenceAutoActions || 0}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-400">Required human override after auto-action</span>
+                  <span className="text-sm text-[var(--color-text-secondary)]">Required human override after auto-action</span>
                   {/* TODO: placeholder — pending data model support for tracking human overrides */}
-                  <span className="text-lg font-bold text-green-400 font-mono">0</span>
+                  <span className="text-lg font-bold text-emerald-400 font-mono">0</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-400">Calibration accuracy</span>
-                  <span className="text-lg font-bold text-green-400 font-mono">{cal.accuracy || 'No data'}</span>
+                  <span className="text-sm text-[var(--color-text-secondary)]">Calibration accuracy</span>
+                  <span className="text-lg font-bold text-emerald-400 font-mono">{cal.accuracy || 'No data'}</span>
                 </div>
-                <div className="pt-3 border-t border-white/5 text-xs text-gray-600">
+                <div className="pt-3 border-t border-white/10 text-xs text-[var(--color-text-muted)]">
                   {cal.description || 'No auto-actions yet.'}
                 </div>
               </div>
@@ -225,14 +225,14 @@ export default function MetricsPage() {
             <GlassPanel title="Policy Enforcement" icon={<Shield className="w-4 h-4" />}>
               <div className="py-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-400">Policy override rate</span>
+                  <span className="text-sm text-[var(--color-text-secondary)]">Policy override rate</span>
                   <span className="text-lg font-bold text-amber-400 font-mono">{s.policyOverrideRate || '0%'}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-400">Events/hour (current)</span>
-                  <span className="text-lg font-bold text-blue-400 font-mono">{s.recentEventsPerHour || 0}</span>
+                  <span className="text-sm text-[var(--color-text-secondary)]">Events/hour (current)</span>
+                  <span className="text-lg font-bold text-[var(--color-accent)] font-mono">{s.recentEventsPerHour || 0}</span>
                 </div>
-                <div className="pt-3 border-t border-white/5 text-xs text-gray-600">
+                <div className="pt-3 border-t border-white/10 text-xs text-[var(--color-text-muted)]">
                   Every action is checked against policy.json before execution.
                   Life-support assets are never auto-isolated regardless of confidence score.
                 </div>

@@ -16,8 +16,8 @@ export function StatusDot({ status }: StatusDotProps) {
   return (
     <div className="relative flex items-center justify-center w-3 h-3">
       <motion.div
-        className={`absolute inset-0 rounded-full ${colors[status]} opacity-50`}
-        animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+        className={`absolute inset-0 rounded-full ${colors[status]} opacity-40`}
+        animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0, 0.4] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       />
       <div className={`relative w-2 h-2 rounded-full ${colors[status]}`} />

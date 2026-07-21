@@ -38,8 +38,8 @@ export default function AuditLogPage() {
           
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold tracking-wide text-white">Tamper-Evident Audit Log</h2>
-              <p className="text-gray-400 mt-1">Cryptographic hash chain of all agent decisions.</p>
+              <h2 className="text-2xl font-bold tracking-wide text-[var(--color-text-primary)]">Tamper-Evident Audit Log</h2>
+              <p className="text-[var(--color-text-muted)] mt-1">Cryptographic hash chain of all agent decisions.</p>
             </div>
             
             <Button onClick={handleVerify} disabled={verifying} className="gap-2">
@@ -56,17 +56,17 @@ export default function AuditLogPage() {
                 exit={{ opacity: 0, height: 0 }}
                 className="overflow-hidden"
               >
-                <div className={`p-4 rounded-xl border flex items-start gap-4 ${verifyResult.valid ? 'bg-green-500/10 border-green-500/30' : 'bg-red-500/10 border-red-500/30'}`}>
+                <div className={`p-4 rounded-2xl border flex items-start gap-4 backdrop-blur-sm ${verifyResult.valid ? 'bg-emerald-50/80 border-emerald-200' : 'bg-red-50/80 border-red-200'}`}>
                   {verifyResult.valid ? (
-                    <ShieldCheck className="w-6 h-6 text-green-500 shrink-0" />
+                    <ShieldCheck className="w-6 h-6 text-emerald-600 shrink-0" />
                   ) : (
-                    <ShieldAlert className="w-6 h-6 text-red-500 shrink-0" />
+                    <ShieldAlert className="w-6 h-6 text-red-600 shrink-0" />
                   )}
                   <div>
-                    <h3 className={`text-lg font-bold ${verifyResult.valid ? 'text-green-400' : 'text-red-400'}`}>
+                    <h3 className={`text-lg font-bold ${verifyResult.valid ? 'text-emerald-700' : 'text-red-700'}`}>
                       {verifyResult.valid ? 'Chain Verified Successfully' : 'INTEGRITY VIOLATION DETECTED'}
                     </h3>
-                    <p className="text-gray-300 mt-1">
+                    <p className="text-[var(--color-text-secondary)] mt-1">
                       {verifyResult.valid 
                         ? 'All cryptographic hashes match. No records have been altered.'
                         : `Hash chain broken at index ${verifyResult.brokenAt?.index} for event ${verifyResult.brokenAt?.eventId}. A record was tampered with.`
@@ -82,7 +82,7 @@ export default function AuditLogPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-white/10 text-gray-500 text-xs uppercase tracking-wider">
+                  <tr className="border-b border-black/10 text-[var(--color-text-muted)] text-xs uppercase tracking-wider">
                     <th className="p-4 font-semibold">Timestamp</th>
                     <th className="p-4 font-semibold">Event ID</th>
                     <th className="p-4 font-semibold">Agent</th>
@@ -90,29 +90,29 @@ export default function AuditLogPage() {
                     <th className="p-4 font-semibold">Hash Signature</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-black/5">
                   {logs.map((log) => (
-                    <tr key={log._id} className="text-sm hover:bg-white/5 transition-colors">
-                      <td className="p-4 text-gray-400 whitespace-nowrap">
+                    <tr key={log._id} className="text-sm hover:bg-white/40 transition-colors">
+                      <td className="p-4 text-[var(--color-text-secondary)] whitespace-nowrap">
                         {new Date(log.createdAt).toLocaleString()}
                       </td>
-                      <td className="p-4 text-gray-300 font-mono text-xs">
+                      <td className="p-4 text-[var(--color-text-primary)] font-mono text-xs">
                         {typeof log.eventId === 'string' ? log.eventId.substring(0, 8) : (log.eventId?._id || log.eventId?.id || 'unknown').toString().substring(0, 8)}...
                       </td>
-                      <td className="p-4 font-medium text-blue-400">
+                      <td className="p-4 font-medium text-[var(--color-accent)]">
                         {log.payload.agent}
                       </td>
-                      <td className="p-4 text-gray-300">
+                      <td className="p-4 text-[var(--color-text-primary)]">
                         {log.payload.action.replace('_', ' ')}
                       </td>
-                      <td className="p-4 font-mono text-xs text-gray-500 truncate max-w-[200px]">
+                      <td className="p-4 font-mono text-xs text-[var(--color-text-muted)] truncate max-w-[200px]">
                         {log.currentHash}
                       </td>
                     </tr>
                   ))}
                   {logs.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="p-8 text-center text-gray-500">
+                      <td colSpan={5} className="p-8 text-center text-[var(--color-text-muted)]">
                         No audit records found.
                       </td>
                     </tr>

@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sentinel
 
-## Getting Started
+Sentinel is an advanced, multi-agent AI cybersecurity defense pipeline designed to detect, investigate, and autonomously respond to complex network threats (like the AIIMS Delhi 2022 ransomware attack) in seconds rather than hours.
 
-First, run the development server:
+## Key Features
+- **Multi-Agent Architecture**: Uses a specialized pipeline of LLM agents (Watcher, Investigator, Judge, Responder) to analyze and mitigate threats.
+- **Code-Enforced Safety**: The Judge agent determines confidence, but the pipeline enforces strict code-level routing (e.g., auto-blocking >80%, Human-in-the-loop 40-80%).
+- **Policy Enforcement**: Automated actions are strictly validated against a predefined `policy.json` and a blast-radius dependency graph (`assets.json`) before execution.
+- **Dark Mode Aesthetic**: A sleek, dark-translucent glass UI tailored for security operations centers (SOC).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup & Run
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Prerequisites
+- Node.js 18+
+- A MongoDB cluster URL (shared/remote or local)
+- Google Gemini API Key (`LLM_API_KEY`) for agent inference.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation
+1. Clone the repository and install dependencies:
+   ```bash
+   npm install
+   ```
+2. Set up your environment variables in `.env`:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   LLM_API_KEY=your_gemini_api_key
+   ```
+3. Seed the database with initial demo data (optional but recommended):
+   ```bash
+   node migrate.js
+   ```
+4. Start the development server (runs with custom Socket.io integration):
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Documentation
+- [Architecture Guide](./docs/ARCHITECTURE.md) - Deep dive into the agent pipeline.
+- [Demo Guide](./docs/DEMO_GUIDE.md) - How to run the built-in simulations (AIIMS Replay & Ambiguous Event).

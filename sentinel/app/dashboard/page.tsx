@@ -67,8 +67,8 @@ export default function DashboardPage() {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <h2 className="text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">Live Operations</h2>
-              <div className={`flex items-center gap-2 text-sm text-gray-400 bg-white/5 px-3 py-1.5 rounded-full border shadow-lg ${isConnected ? 'border-green-500/50 text-green-400 glow-border-active' : 'border-red-500/50 text-red-400 glow-border-red'}`}>
+              <h2 className="text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">Live Operations</h2>
+              <div className={`flex items-center gap-2 text-sm px-3 py-1.5 rounded-full glass-input shadow-sm ${isConnected ? 'text-emerald-600' : 'text-red-500'}`}>
                 <Activity className={`w-4 h-4 ${isConnected ? 'animate-pulse' : ''}`} />
                 <span className="text-xs font-bold tracking-widest">{isConnected ? 'LIVE' : 'DISCONNECTED'}</span>
               </div>
@@ -76,7 +76,7 @@ export default function DashboardPage() {
 
             <div className="flex items-center gap-3 flex-wrap">
               {simStatus && (
-                <span className="text-xs font-bold tracking-wide text-amber-300 bg-amber-500/10 border border-amber-500/40 px-4 py-2 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                <span className="text-xs font-bold tracking-wide text-amber-700 bg-amber-50 border border-amber-200 px-4 py-2 rounded-full shadow-sm">
                   {simStatus}
                 </span>
               )}
@@ -85,9 +85,8 @@ export default function DashboardPage() {
                 disabled={simulating}
                 variant="danger"
                 size="sm"
-                className="relative overflow-hidden group gap-2 font-bold px-5 py-2 hover:shadow-[0_0_20px_rgba(239,68,68,0.6)] transition-all duration-300"
+                className="relative overflow-hidden group gap-2 font-bold px-5 py-2 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-white/20 to-red-600/0 -translate-x-full group-hover:animate-[cyber-flow_1.5s_ease-in-out_infinite]" />
                 <Play className="w-4 h-4" />
                 Replay AIIMS Delhi Attack
               </Button>
@@ -96,7 +95,7 @@ export default function DashboardPage() {
                 disabled={simulating}
                 variant="ghost"
                 size="sm"
-                className="gap-2 text-gray-300 hover:text-white hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 border border-transparent hover:border-white/20"
+                className="gap-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-all duration-300 border border-white/10 hover:border-white/20 hover:bg-white/5"
               >
                 <Zap className="w-4 h-4" />
                 Ambiguous Event
@@ -105,13 +104,13 @@ export default function DashboardPage() {
           </div>
 
           {/* AIIMS Context Banner */}
-          <div className="bg-red-950/30 border border-red-500/20 rounded-xl p-4 flex items-start gap-3">
+          <div className="bg-red-500/10 backdrop-blur-sm border border-red-500/20 rounded-2xl p-4 flex items-start gap-3 shadow-sm">
             <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-semibold text-red-300">Demo Scenario: AIIMS Delhi Ransomware (Nov 2022)</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm font-semibold text-red-400">Demo Scenario: AIIMS Delhi Ransomware (Nov 2022)</p>
+              <p className="text-xs text-[var(--color-text-secondary)] mt-1">
                 Real incident: 100+ servers encrypted, 1.3TB data held ransom, critical patient care disrupted for 15 days.
-                Estimated impact: ₹200Cr+. Detection time: ~6 hours. <span className="text-green-400">Sentinel detects the same attack in under 60 seconds.</span>
+                Estimated impact: ₹200Cr+. Detection time: ~6 hours. <span className="text-emerald-400 font-medium">Sentinel detects the same attack in under 60 seconds.</span>
               </p>
             </div>
           </div>
@@ -129,19 +128,19 @@ export default function DashboardPage() {
           {/* Events + Review Queue */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
                 Event Feed
                 {state.events.length > 0 && (
-                  <span className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/20 px-2 py-0.5 rounded-full">
                     {state.events.length}
                   </span>
                 )}
               </h3>
               <div className="space-y-3">
                 {state.events.length === 0 ? (
-                  <div className="text-gray-500 text-sm py-12 text-center bg-white/5 rounded-xl border border-white/5 border-dashed">
-                    <Activity className="w-8 h-8 mx-auto mb-3 opacity-20" />
-                    <p>No events yet. Click "Replay AIIMS Delhi Attack" to start.</p>
+                  <div className="text-gray-400 font-medium text-sm py-12 text-center glass-panel border-dashed">
+                    <Activity className="w-8 h-8 mx-auto mb-3 opacity-50" />
+                    <p>No events yet. Click &quot;Replay AIIMS Delhi Attack&quot; to start.</p>
                   </div>
                 ) : (
                   state.events.map(event => (
