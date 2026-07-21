@@ -1,0 +1,32 @@
+{
+  "asset_classes": {
+    "life_support": {
+      "label": "Life Support & Critical Medical",
+      "description": "ICU ventilators, infusion pumps, cardiac monitors — loss of service is life-threatening",
+      "permitted_actions": ["alert_human", "open_ticket"],
+      "forbidden_actions": ["block_ip", "isolate_segment", "failover"],
+      "blast_radius_threshold": 1
+    },
+    "ot_control": {
+      "label": "OT / Industrial Control Systems",
+      "description": "PLCs, SCADA controllers, RTUs in power/water systems",
+      "permitted_actions": ["alert_human", "open_ticket", "block_ip"],
+      "forbidden_actions": ["isolate_segment", "failover"],
+      "blast_radius_threshold": 3
+    },
+    "general_network": {
+      "label": "General IT Network",
+      "description": "Workstations, printers, general servers — standard enterprise equipment",
+      "permitted_actions": ["block_ip", "isolate_segment", "alert_human", "open_ticket", "failover"],
+      "forbidden_actions": [],
+      "blast_radius_threshold": 10
+    },
+    "dmz": {
+      "label": "DMZ / Internet-Facing",
+      "description": "Web servers, load balancers, API gateways exposed to the internet",
+      "permitted_actions": ["block_ip", "alert_human", "open_ticket"],
+      "forbidden_actions": ["isolate_segment", "failover"],
+      "blast_radius_threshold": 5
+    }
+  }
+}

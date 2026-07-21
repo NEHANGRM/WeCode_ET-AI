@@ -1,0 +1,92 @@
+{
+  "assets": [
+    {
+      "asset_id": "ICU-VENT-01",
+      "name": "ICU Ventilator Array A",
+      "type": "life_support",
+      "asset_class": "life_support",
+      "ip_range": "10.1.1.0/24",
+      "location": "AIIMS Delhi — ICU Ward 3",
+      "critical": true,
+      "dependents": [],
+      "description": "Mechanical ventilators serving 24 ICU patients"
+    },
+    {
+      "asset_id": "ICU-PUMP-02",
+      "name": "IV Infusion Pump Network",
+      "type": "life_support",
+      "asset_class": "life_support",
+      "ip_range": "10.1.2.0/24",
+      "location": "AIIMS Delhi — Surgical Ward",
+      "critical": true,
+      "dependents": [],
+      "description": "Networked infusion pumps — compromising these can alter drug dosage"
+    },
+    {
+      "asset_id": "PACS-SRV-01",
+      "name": "PACS Imaging Server",
+      "type": "medical_server",
+      "asset_class": "general_network",
+      "ip_range": "10.2.1.10",
+      "location": "AIIMS Delhi — Radiology",
+      "critical": false,
+      "dependents": ["ICU-VENT-01"],
+      "description": "Picture Archiving and Communication System"
+    },
+    {
+      "asset_id": "OT-PLC-ALPHA",
+      "name": "Power Plant PLC Alpha",
+      "type": "ot_control",
+      "asset_class": "ot_control",
+      "ip_range": "192.168.50.0/24",
+      "location": "Sector 7 Substation — Delhi Power Grid",
+      "critical": true,
+      "dependents": ["ICU-VENT-01", "ICU-PUMP-02"],
+      "description": "Primary PLC controlling 220kV substation — loss disrupts 3 hospital wards"
+    },
+    {
+      "asset_id": "OT-RTU-BETA",
+      "name": "Water Treatment RTU",
+      "type": "ot_control",
+      "asset_class": "ot_control",
+      "ip_range": "192.168.55.0/24",
+      "location": "DJB Water Treatment Plant, Chandrawal",
+      "critical": true,
+      "dependents": [],
+      "description": "Remote Terminal Unit managing chlorination dosing"
+    },
+    {
+      "asset_id": "HOSP-CORE-SW",
+      "name": "Hospital Core Switch",
+      "type": "network",
+      "asset_class": "general_network",
+      "ip_range": "192.168.1.1",
+      "location": "AIIMS Delhi — Data Centre",
+      "critical": false,
+      "dependents": ["ICU-VENT-01", "ICU-PUMP-02", "PACS-SRV-01"],
+      "description": "Core L3 switch — isolation would disconnect ICU medical devices"
+    },
+    {
+      "asset_id": "EHR-SRV-01",
+      "name": "Electronic Health Records Server",
+      "type": "application_server",
+      "asset_class": "general_network",
+      "ip_range": "10.2.2.20",
+      "location": "AIIMS Delhi — Server Room B",
+      "critical": false,
+      "dependents": [],
+      "description": "Patient records system — target of the 2022 ransomware attack"
+    },
+    {
+      "asset_id": "WEB-DMZ-01",
+      "name": "Patient Portal Web Server",
+      "type": "web_server",
+      "asset_class": "dmz",
+      "ip_range": "203.99.14.5",
+      "location": "DMZ — Internet Facing",
+      "critical": false,
+      "dependents": ["EHR-SRV-01"],
+      "description": "Public-facing patient portal"
+    }
+  ]
+}
