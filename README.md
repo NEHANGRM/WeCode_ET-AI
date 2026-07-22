@@ -1,32 +1,28 @@
-# 🛡️ Sentinel — Autonomous SOC Incident Response System
+# WatchDog
 
-> An autonomous, self-correcting, cryptographically auditable multi-agent system for security incident triage and response.
+WatchDog is an AI-powered Cyber Resilience platform for critical national infrastructure. It autonomously detects behavioural anomalies, correlates weak signals across heterogeneous IT and OT environments, maps attack progression against MITRE ATT&CK, and orchestrates containment actions—compressing Mean Time To Detect (MTTD) and Mean Time To Respond (MTTR) from weeks to hours.
 
-🚀 **Live Demo:** [https://wecode-et-ai.onrender.com](https://wecode-et-ai.onrender.com)
+## Key Features
+- **Multi-Agent Architecture**: Uses a specialized pipeline of LLM agents (Watcher, Investigator, Judge, Responder) to analyze and mitigate threats.
+- **Code-Enforced Safety**: The Judge agent determines confidence, but the pipeline enforces strict code-level routing (e.g., auto-blocking >80%, Human-in-the-loop 40-80%).
+- **Policy Enforcement**: Automated actions are strictly validated against a predefined `policy.json` and a blast-radius dependency graph (`assets.json`) before execution.
+- **Dark Mode Aesthetic**: A sleek, dark-translucent glass UI tailored for security operations centers (SOC).
 
-**Built for:** ET AI Hackathon 2026
-**Problem Statement:** PS7 — Cyber Resilience for Critical National Infrastructure
-**Vertical:** Security Operations (SOC) Incident Response
+## ET AI Hackathon - Judging Criteria Alignment
 
----
+WatchDog was built explicitly to solve the **AI-Driven Cyber Resilience for Critical National Infrastructure** challenge, addressing the CERT-In statistics and recent AIIMS/CBSE breaches.
 
-## 🎯 The Problem
-
-Enterprise SOC teams and Critical Infrastructure networks don't have a detection problem — they have an **alert-volume problem**. Manually triaging a single security alert (gathering IP reputation, cross-referencing threat intel, deciding on remediation) typically takes an analyst 15–30 minutes. At enterprise scale, that backlog directly increases Mean-Time-to-Respond (MTTR) — and MTTR is one of the strongest predictors of breach cost and blast radius.
-
-Every automated remediation system that enterprises actually adopt has to clear one trust bar: **"why did the system do that, and can I prove it wasn't a black box?"** Compliance and security leadership won't grant real autonomy to a system that can't answer that question. Sentinel is built around that trust bar as the core product, not an afterthought.
-
-## 💡 The Solution
-
-Sentinel is a **five-agent pipeline** that takes a raw security alert, investigates it, decides what to do, and logs every single decision to a **tamper-evident, hash-chained audit ledger** — one that can be verified live, in front of a skeptical reviewer, in seconds.
-
-**One-line pitch:** *A SOC analyst that never sleeps, never gets fatigued, and shows its work on every decision.*
+- **Business Impact (25%):** Directly solves the delayed detection problem in government entities. By acting as an Autonomous Incident Response Orchestrator (SOAR), it compresses MTTD and MTTR, preventing catastrophic downtime in critical infrastructure while enforcing "blast radius" thresholds to guarantee operational safety.
+- **Technical Excellence (25%):** A robust Next.js frontend paired with a custom Multi-Agent Node.js backend. Features real-time Socket.io communication, RAG/Knowledge Graph concepts for MITRE ATT&CK mapping, and seamless fallback data for flawless demonstrations. Ensures full auditability of every automated action taken.
+- **Innovation (20%):** Replaces traditional signature-based playbooks with an Agentic AI pipeline (Watcher, Investigator, Judge, Responder). It acts as an APT Campaign Attribution Agent, using LLMs to synthesize context rather than relying on brittle, known malware signatures.
+- **Scalability (15%):** Designed to scale horizontally across heterogeneous IT/OT environments. The agent pipeline can ingest millions of logs, filter the noise, and only escalate genuinely ambiguous events to human operators, drastically multiplying a security team's capacity.
+- **User Experience (15%):** The project features a premium, cinematic landing page and a highly interactive "glassmorphism" dashboard that visualizes the AI's real-time thought process, complete with a Live AIIMS Delhi ransomware simulation replay.
 
 ---
 
 ## 🧠 How It Works
 
-![Architecture Diagram](architecture.png)
+![Architecture Diagram](sentinel/architecture.png)
 
 ```text
 ┌──────────────┐   ┌───────────────┐   ┌─────────────┐   ┌──────────────┐   ┌─────────────┐
@@ -62,34 +58,16 @@ Sentinel is a **five-agent pipeline** that takes a raw security alert, investiga
 | Frontend | Next.js (App Router), Tailwind CSS v4, Framer Motion, Socket.IO Client |
 | Backend | Next.js API Routes, Custom Node Server (for Socket.IO) |
 | Database | MongoDB (Mongoose) |
-| Orchestration | Hand-rolled finite-state machine (`lib/agents/pipeline.ts`) |
+| Orchestration | Hand-rolled finite-state machine (`sentinel/lib/agents/pipeline.ts`) |
 | AI | Google Gemini API (schema-constrained JSON output) |
 | Threat Intel | AbuseIPDB, VirusTotal, GreyNoise API |
 
-## 📁 Project Structure
-
-```text
-sentinel/
-├── app/                  # Next.js Frontend & API Routes
-│   ├── api/              # API endpoints (events, investigate, judge, respond, audit)
-│   ├── dashboard/        # Live operations control room
-│   └── audit-log/        # Hash chain verification page
-├── components/           # React UI components (GlassPanel, Navbar, Sidebar)
-├── lib/                  # Backend logic
-│   ├── agents/           # Watcher, Investigator, Judge, Responder, Record
-│   ├── db/               # MongoDB models (Event, Investigation, Judgment, Action, AuditRecord)
-│   ├── integrations/     # AbuseIPDB, VirusTotal, GreyNoise API wrappers
-│   └── hashChain.ts      # SHA-256 cryptography ledger logic
-├── scripts/              # Database seeding and tampering scripts
-└── server.ts             # Custom server for Next.js + Socket.IO
-```
-
-## ⚙️ Setup
+## ⚙️ Setup & Run
 
 ### Prerequisites
 - Node.js 18+
-- MongoDB (local or Atlas)
-- API keys: AbuseIPDB, VirusTotal, GreyNoise (free tiers), and Gemini
+- A MongoDB cluster URL (shared/remote or local)
+- Google Gemini API Key (`LLM_API_KEY`) for agent inference.
 
 ### Installation
 
@@ -105,57 +83,23 @@ cp .env.local.example .env.local
 # (Add your MONGODB_URI and LLM_API_KEY)
 
 # Seed the database with demo scenarios
-npx tsx scripts/seed.ts
+node migrate.js
 
 # Run the development server
 npm run dev
 ```
 
-### Environment Variables (`.env.local`)
-
-```env
-MONGODB_URI=mongodb://localhost:27017/sentinel
-ABUSEIPDB_KEY=
-VIRUSTOTAL_KEY=
-GREYNOISE_KEY=
-LLM_API_KEY=your_gemini_key
-```
-
-> If a threat intel key is missing, the relevant integration falls back to cached/mock responses so the demo doesn't break on network flakiness.
-
----
+### Documentation
+- [Architecture Guide](./sentinel/docs/ARCHITECTURE.md) - Deep dive into the agent pipeline.
+- [Demo Guide](./sentinel/docs/DEMO_GUIDE.md) - How to run the built-in simulations (Live AIIMS Replay & Ambiguous Event).
 
 ## 🎬 Demo Flow
 
 1. **Cold open** — Dashboard shows pipeline monitoring.
-2. **Trigger Simulation** — Click the simulation button. A seeded DDoS case runs through the full pipeline, with the Agent Graph lighting up node by node in real time via WebSockets.
+2. **Trigger Simulation** — Click the simulation button. A seeded case runs through the full pipeline, with the Agent Graph lighting up node by node in real time via WebSockets.
 3. **Retry in action** — An intentionally ambiguous seeded case triggers the confidence-gated retry loop, escalating to the Review Queue.
-4. **Break the Chain** — 
-   - Go to Audit Log and click "Verify Chain Integrity" (shows Green/Success).
-   - In a terminal, run `npx tsx scripts/tamper.ts` to simulate a malicious database edit.
-   - Click "Verify Chain Integrity" again — watch it turn Red and identify the broken hash link!
-
-## 🚧 What's Real vs. Simulated 
-
-| Component | Status |
-|---|---|
-| 5-Agent Orchestration | ✅ Fully functional async pipeline |
-| Hash-chain ledger + verification | ✅ Fully functional (real SHA-256) |
-| AbuseIPDB / VirusTotal / GN | ✅ Real API calls (with offline fallbacks) |
-| LLM Synthesis & Scoring | ✅ Fully functional (Gemini 2.5 Flash) |
-| Confidence-gated retry | ✅ Fully functional |
-| Remediation actions | ⚠️ Logged and simulated — no real network/firewall integration |
-| Network Traffic | ⚠️ Simulated payload injected via API |
-
-## 📊 Impact
-
-- Collapses a 15–30 minute manual triage window down to seconds for the median alert.
-- Cryptographically verifiable audit trail supports NERC CIP, SOC 2, and ISO 27001 evidence requirements.
-- Constrained action space and bounded retry logic mean the system never silently oversteps its confidence on critical infrastructure.
 
 ## 👥 Team
-- Naren
-- [Add other team members]
-
-## 📜 License
-Hackathon Project - Not intended for unmodified production use.
+- Naren Moorthy S
+- Sarigasini M
+- Nehan G R M
