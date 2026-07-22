@@ -22,20 +22,7 @@ WatchDog was built explicitly to solve the **AI-Driven Cyber Resilience for Crit
 
 ## 🧠 How It Works
 
-![Architecture Diagram](sentinel/architecture.png)
-
-```text
-┌──────────────┐   ┌───────────────┐   ┌─────────────┐   ┌──────────────┐   ┌─────────────┐
-│  Detection   │──▶│  Enrichment   │──▶│   Triage    │──▶│   Decision   │──▶│    Audit    │
-│ (rule-based) │   │ (LLM + APIs)  │   │    (LLM)    │   │ (LLM, fixed  │   │ (ledger     │
-│              │   │               │   │             │   │  action set) │   │  write)     │
-└──────────────┘   └───────────────┘   └──────┬──────┘   └──────────────┘   └─────────────┘
-                            ▲                  │
-                            │  retry if         │
-                            └─ confidence <0.7 ─┘
-                               (once, then escalates
-                                to human if still low)
-```
+![Architecture Diagram](architecture.png)
 
 1. **Watcher (Detection) Agent** — deterministic, rule-based (request-rate spikes, known-bad-IP hits). No LLM call — fast and consistent.
 2. **Investigator (Enrichment) Agent** — queries AbuseIPDB, VirusTotal, and GreyNoise in parallel, then uses an LLM to summarize findings into a structured threat context.
