@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/ui/Sidebar";
+import { ChatCopilot } from "@/app/dashboard/components/ChatCopilot";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -79,6 +80,9 @@ export default function RootLayout({
             {children}
           </main>
         </div>
+        
+        {/* Chat Copilot — global floating overlay */}
+        <ChatCopilot />
       </body>
     </html>
   );

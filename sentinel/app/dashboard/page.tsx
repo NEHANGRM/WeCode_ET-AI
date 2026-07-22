@@ -5,7 +5,6 @@ import { EventCard } from './components/EventCard';
 import { ReviewQueue } from './components/ReviewQueue';
 import { ConfidenceGauge } from './components/ConfidenceGauge';
 import { CampaignAlerts } from './components/CampaignAlerts';
-import { ChatCopilot } from './components/ChatCopilot';
 import { Activity, Play, Zap, AlertTriangle, Database } from 'lucide-react';
 import { useSentinelSocket } from '@/hooks/useSentinelSocket';
 import { Button } from '@/components/ui/Button';
@@ -162,9 +161,6 @@ export default function DashboardPage() {
 
         </div>
       </div>
-
-      {/* Chat Copilot — global floating overlay */}
-      <ChatCopilot />
     </div>
   );
 }

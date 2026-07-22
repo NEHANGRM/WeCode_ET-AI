@@ -92,13 +92,26 @@ export function useSentinelSocket() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    // Fetch initial data
+    // Fetch initial data — safe even when DB is slow or returns empty body
     fetch('/api/events')
-      .then(res => res.json())
-      .then(data => {
-        dispatch({ type: 'SET_INITIAL', payload: data });
+      .then(async res => {
+        if (!res.ok) return { events: [], reviews: [] };
+        const text = await res.text();
+        if (!text || text.trim() === '') return { events: [], reviews: [] };
+        try { return JSON.parse(text); } catch { return { events: [], reviews: [] }; }
       })
-      .catch(console.error);
+      .then(data => {
+        dispatch({
+          type: 'SET_INITIAL',
+          payload: {
+            events: Array.isArray(data?.events) ? data.events : [],
+            reviews: Array.isArray(data?.reviews) ? data.reviews : []
+          }
+        });
+      })
+      .catch(() => {
+        dispatch({ type: 'SET_INITIAL', payload: { events: [], reviews: [] } });
+      });
 
     const socketInstance = io({ path: '/socket.io' });
     setSocket(socketInstance);

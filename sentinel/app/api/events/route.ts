@@ -79,40 +79,49 @@ function formatEventForClient(event: any, investigation: any, judgment: any, act
 }
 
 export async function GET() {
-  await connectToDatabase();
-
-  const events = await Event.find().sort({ createdAt: -1 }).limit(50);
-
-  const formattedEvents = [];
-  const reviews = [];
-
-  for (const event of events) {
-    const investigation = await Investigation.findOne({ eventId: event._id }).sort({ createdAt: -1 });
-    const judgment = await Judgment.findOne({ eventId: event._id }).sort({ createdAt: -1 });
-    const action = await Action.findOne({ eventId: event._id }).sort({ createdAt: -1 });
-
-    const formatted = formatEventForClient(event, investigation, judgment, action);
-    formattedEvents.push(formatted);
-
-    if (judgment?.escalatedToHuman && event.status === 'judged') {
-      reviews.push({
-        id: event._id.toString(),
-        ip: event.rawSignal.ip,
-        score: judgment.confidence || judgment.confidenceScore,
-        reason: judgment.reasoning,
-        recommended_action: judgment.recommended_action,
-        time: new Date(judgment.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        abuseIpdbResult: investigation?.abuseIpdbResult || null,
-        virusTotalResult: investigation?.virusTotalResult || null,
-        greyNoiseResult: investigation?.greyNoiseResult || null,
-        evidence: investigation?.evidence || [],
-        mitre_technique: investigation?.mitre_technique || '',
-        plainEnglishSummary: judgment?.plainEnglishSummary || null
-      });
-    }
+  try {
+    await connectToDatabase();
+  } catch {
+    // DB unavailable — return valid empty JSON so the UI never crashes
+    return NextResponse.json({ events: [], reviews: [] });
   }
 
-  return NextResponse.json({ events: formattedEvents, reviews });
+  try {
+    const events = await Event.find().sort({ createdAt: -1 }).limit(50);
+    const formattedEvents = [];
+    const reviews = [];
+
+    for (const event of events) {
+      const investigation = await Investigation.findOne({ eventId: event._id }).sort({ createdAt: -1 });
+      const judgment = await Judgment.findOne({ eventId: event._id }).sort({ createdAt: -1 });
+      const action = await Action.findOne({ eventId: event._id }).sort({ createdAt: -1 });
+
+      const formatted = formatEventForClient(event, investigation, judgment, action);
+      formattedEvents.push(formatted);
+
+      if (judgment?.escalatedToHuman && event.status === 'judged') {
+        reviews.push({
+          id: event._id.toString(),
+          ip: event.rawSignal.ip,
+          score: judgment.confidence || judgment.confidenceScore,
+          reason: judgment.reasoning,
+          recommended_action: judgment.recommended_action,
+          time: new Date(judgment.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          abuseIpdbResult: investigation?.abuseIpdbResult || null,
+          virusTotalResult: investigation?.virusTotalResult || null,
+          greyNoiseResult: investigation?.greyNoiseResult || null,
+          evidence: investigation?.evidence || [],
+          mitre_technique: investigation?.mitre_technique || '',
+          plainEnglishSummary: judgment?.plainEnglishSummary || null
+        });
+      }
+    }
+
+    return NextResponse.json({ events: formattedEvents, reviews });
+  } catch (err) {
+    console.error('[GET /api/events] Query error:', err);
+    return NextResponse.json({ events: [], reviews: [] });
+  }
 }
 
 export async function POST(req: Request) {

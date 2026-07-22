@@ -96,9 +96,9 @@ export function CampaignAlerts() {
           <Button
             onClick={handleRunCorrelator}
             disabled={running}
-            variant="secondary"
+            variant="primary"
             size="sm"
-            className="gap-2 text-xs"
+            className="gap-2 text-xs bg-orange-600 hover:bg-orange-500 shadow-orange-900/20"
           >
             {running ? <Loader2 className="w-3 h-3 animate-spin" /> : <RefreshCw className="w-3 h-3" />}
             Run Correlation

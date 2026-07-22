@@ -11,8 +11,9 @@ export const dynamic = 'force-dynamic';
 // GET /api/campaigns/:id — campaign detail with populated case data
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     await connectToDatabase();
   } catch (err) {
@@ -20,7 +21,7 @@ export async function GET(
     return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
   }
 
-  const campaign = await Campaign.findOne({ campaign_id: params.id }).lean() as any;
+  const campaign = await Campaign.findOne({ campaign_id: id }).lean() as any;
   if (!campaign) {
     return NextResponse.json({ error: 'Campaign not found' }, { status: 404 });
   }
@@ -74,13 +75,14 @@ export async function GET(
 // PATCH /api/campaigns/:id — update status
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     await connectToDatabase();
     const body = await req.json();
     const campaign = await Campaign.findOneAndUpdate(
-      { campaign_id: params.id },
+      { campaign_id: id },
       { status: body.status, updatedAt: new Date() },
       { new: true }
     ).lean();

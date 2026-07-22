@@ -31,7 +31,6 @@ app.prepare().then(() => {
   io.on('connection', (socket) => {
     console.log(`Socket connected: ${socket.id}`);
     
-    // We can listen to events from the client if needed, but mostly server pushes to client
     socket.on('disconnect', () => {
       console.log(`Socket disconnected: ${socket.id}`);
     });
