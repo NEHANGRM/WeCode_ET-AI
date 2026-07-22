@@ -2,6 +2,8 @@
 
 > An autonomous, self-correcting, cryptographically auditable multi-agent system for security incident triage and response.
 
+🚀 **Live Demo:** [https://wecode-et-ai.onrender.com](https://wecode-et-ai.onrender.com)
+
 **Built for:** ET AI Hackathon 2026
 **Problem Statement:** PS7 — Cyber Resilience for Critical National Infrastructure
 **Vertical:** Security Operations (SOC) Incident Response
