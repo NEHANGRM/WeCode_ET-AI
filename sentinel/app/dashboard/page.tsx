@@ -4,7 +4,9 @@ import { PipelineGraph } from './components/PipelineGraph';
 import { EventCard } from './components/EventCard';
 import { ReviewQueue } from './components/ReviewQueue';
 import { ConfidenceGauge } from './components/ConfidenceGauge';
-import { Activity, Play, Zap, AlertTriangle } from 'lucide-react';
+import { CampaignAlerts } from './components/CampaignAlerts';
+import { ChatCopilot } from './components/ChatCopilot';
+import { Activity, Play, Zap, AlertTriangle, Database } from 'lucide-react';
 import { useSentinelSocket } from '@/hooks/useSentinelSocket';
 import { Button } from '@/components/ui/Button';
 
@@ -125,6 +127,9 @@ export default function DashboardPage() {
             </div>
           </div>
 
+          {/* Campaign Alerts — above event feed */}
+          <CampaignAlerts />
+
           {/* Events + Review Queue */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
@@ -157,6 +162,9 @@ export default function DashboardPage() {
 
         </div>
       </div>
+
+      {/* Chat Copilot — global floating overlay */}
+      <ChatCopilot />
     </div>
   );
 }
