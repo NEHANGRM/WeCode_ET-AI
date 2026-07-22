@@ -24,6 +24,8 @@ Sentinel is a **five-agent pipeline** that takes a raw security alert, investiga
 
 ## 🧠 How It Works
 
+![Architecture Diagram](architecture.png)
+
 ```text
 ┌──────────────┐   ┌───────────────┐   ┌─────────────┐   ┌──────────────┐   ┌─────────────┐
 │  Detection   │──▶│  Enrichment   │──▶│   Triage    │──▶│   Decision   │──▶│    Audit    │
