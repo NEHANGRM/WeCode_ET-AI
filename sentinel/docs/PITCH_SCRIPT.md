@@ -3,20 +3,22 @@
 ## 1. The Hook (The Problem)
 **"Good morning/afternoon everyone. We are the WeCode Team, and today we’re presenting WatchDog."**
 
-"In 2022, the AIIMS Delhi network was brought to a standstill by a massive ransomware attack. The breach wasn't necessarily because they lacked security tools, but because human analysts simply cannot triage, investigate, and respond to thousands of alerts fast enough. The industry is suffering from severe **alert fatigue**. When an attack moves laterally in seconds, humans cannot keep up."
+"In 2022, the AIIMS Delhi network was brought to a standstill by a massive ransomware attack. Fast forward to early 2026, and a coordinated cyberattack targeted CBSE's digital infrastructure, forcing emergency shutdowns across multiple states. According to CERT-In, they handled over 1.59 million cybersecurity incidents in 2023 alone, and that number is climbing.
+
+The core problem is **detection speed**. By the time a known malware signature is detected, the attacker has already won. Advanced Persistent Threats (APTs) operate low and slow, evading traditional tools. Public sector organizations discover breaches weeks or months after the initial infiltration."
 
 ## 2. The Solution (What is WatchDog?)
-"To solve this, we built **WatchDog**: an autonomous, multi-agent Incident Response pipeline. 
+"To solve this, we built **WatchDog**: an AI-powered Cyber Resilience platform for critical national infrastructure. 
 
-WatchDog doesn't just surface alerts; it actively investigates them using specialized LLM agents and autonomously physically neutralizes high-confidence threats in real-time, all while leaving a cryptographically auditable trail."
+WatchDog doesn't rely on known signatures. Instead, it is a **Behavioural Anomaly Detection Engine**. It uses specialized LLM agents to continuously correlate weak signals across heterogeneous IT and OT environments, autonomously orchestrating containment and compressing Mean Time To Detect (MTTD) and Mean Time To Respond (MTTR) from weeks down to hours, or even seconds."
 
 ## 3. How It Works (The Technical Architecture)
 "Let me explain the technical architecture. When a suspicious event occurs, it triggers a strict, code-enforced pipeline made of four distinct agents:
 
-1. **The Watcher:** Ingests raw network telemetry, filtering out benign noise.
-2. **The Investigator:** It takes the anomaly and enriches it by querying external Threat Intelligence APIs like AbuseIPDB, VirusTotal, and GreyNoise. It synthesizes this context and maps it to MITRE ATT&CK techniques.
+1. **The Watcher:** Ingests raw network telemetry across IT/OT environments, acting as our behavioural anomaly detection layer to filter out benign noise.
+2. **The Investigator:** Acting as our APT Campaign Attribution Agent, it enriches the anomaly by querying external Threat Intelligence APIs. It synthesizes this context and maps the attack progression directly to MITRE ATT&CK techniques.
 3. **The Judge:** This agent evaluates all the enriched evidence and assigns a strict 0 to 100 confidence score to the threat.
-4. **The Responder:** If a threat is confirmed, the Responder formulates an action, like isolating a server or blocking an IP."
+4. **The Responder:** Acting as an Autonomous Incident Response Orchestrator, it formulates containment actions, like isolating a server or blocking an IP."
 
 ## 4. The Enterprise Trust Factor (Business Viability)
 "Now, you might be thinking: *'You’re letting an LLM execute destructive commands on a network?'* 
