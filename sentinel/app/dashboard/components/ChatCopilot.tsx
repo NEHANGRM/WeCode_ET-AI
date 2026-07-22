@@ -20,23 +20,47 @@ const STARTER_QUESTIONS = [
 
 export function ChatCopilot() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome',
-      role: 'assistant',
-      content: "Hi! I'm **Warden's Copilot**. Ask me anything about your cases, metrics, campaigns, or specific IP addresses. I only answer using real data from your database.",
-      sources: []
-    }
-  ]);
+  
+  const DEFAULT_MESSAGE: Message = {
+    id: 'welcome',
+    role: 'assistant',
+    content: "Hi! I'm **Warden's Copilot**. Ask me anything about your cases, metrics, campaigns, or specific IP addresses. I only answer using real data from your database.",
+    sources: []
+  };
+
+  const [messages, setMessages] = useState<Message[]>([DEFAULT_MESSAGE]);
+  const [isClient, setIsClient] = useState(false);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Load from sessionStorage on mount
+  useEffect(() => {
+    setIsClient(true);
+    const saved = sessionStorage.getItem('warden_copilot_chat');
+    if (saved) {
+      try {
+        setMessages(JSON.parse(saved));
+      } catch {
+        // fallback to default
+      }
+    }
+  }, []);
+
+  // Save to sessionStorage on update
+  useEffect(() => {
+    if (isClient) {
+      sessionStorage.setItem('warden_copilot_chat', JSON.stringify(messages));
+    }
+  }, [messages, isClient]);
+
   // Scroll to bottom on new messages
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (open) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, open]);
 
   // Focus input on open
   useEffect(() => {
@@ -182,7 +206,7 @@ export function ChatCopilot() {
                             key={src}
                             href={
                               isCampaignId(src)
-                                ? `/api/campaigns/${src}`
+                                ? `/dashboard/campaigns/${src}`
                                 : isObjectId(src)
                                   ? `/cases?highlight=${src}`
                                   : '#'
