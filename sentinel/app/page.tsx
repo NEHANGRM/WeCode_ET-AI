@@ -19,7 +19,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#060608] text-white overflow-hidden flex flex-col font-sans selection:bg-indigo-500/30">
+    <div suppressHydrationWarning className="relative min-h-screen bg-[#060608] text-white overflow-hidden flex flex-col font-sans selection:bg-indigo-500/30">
 
       {/* Full Screen Launch Overlay */}
       <AnimatePresence>

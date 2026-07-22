@@ -11,7 +11,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 
   // If we are on the landing page, don't render the sidebar or the dashboard wrapper container
   if (pathname === '/') {
-    return <div className="h-full overflow-y-auto w-full bg-[#05050A]">{children}</div>;
+    return <div suppressHydrationWarning className="h-full overflow-y-auto w-full bg-[#05050A]">{children}</div>;
   }
 
   // Otherwise, render the standard dashboard layout
