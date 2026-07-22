@@ -1,6 +1,6 @@
 # WatchDog
 
-WatchDog is an advanced, multi-agent AI cybersecurity defense pipeline designed to detect, investigate, and autonomously respond to complex network threats (like our Live AIIMS Delhi 2022 ransomware replay simulation) in seconds rather than hours.
+WatchDog is an AI-powered Cyber Resilience platform for critical national infrastructure. It autonomously detects behavioural anomalies, correlates weak signals across heterogeneous IT and OT environments, maps attack progression against MITRE ATT&CK, and orchestrates containment actions—compressing Mean Time To Detect (MTTD) and Mean Time To Respond (MTTR) from weeks to hours.
 
 ## Key Features
 - **Multi-Agent Architecture**: Uses a specialized pipeline of LLM agents (Watcher, Investigator, Judge, Responder) to analyze and mitigate threats.
@@ -38,13 +38,12 @@ WatchDog is an advanced, multi-agent AI cybersecurity defense pipeline designed 
 - [Architecture Guide](./docs/ARCHITECTURE.md) - Deep dive into the agent pipeline.
 - [Demo Guide](./docs/DEMO_GUIDE.md) - How to run the built-in simulations (Live AIIMS Replay & Ambiguous Event).
 
-## ET AI Hackathon - Evaluation Criteria Alignment
+## ET AI Hackathon - Judging Criteria Alignment
 
-WatchDog was built explicitly with the hackathon's core criteria in mind:
+WatchDog was built explicitly to solve the **AI-Driven Cyber Resilience for Critical National Infrastructure** challenge, addressing the CERT-In statistics and recent AIIMS/CBSE breaches.
 
-- **Relevance to Problem Statement:** Tackles the critical issue of SOC alert fatigue and slow incident response times by automating the triage and investigation phases.
-- **Innovation & Creativity:** Replaces traditional static playbooks with dynamic, context-aware AI agents (Watcher, Investigator, Judge, Responder) constrained by strict zero-trust YAML policies and cryptographic audit trails.
-- **Technical Implementation:** A robust Next.js frontend paired with a custom multi-agent Node.js backend. Features real-time Socket.io communication, dynamic MongoDB state tracking, and seamless fallback data for flawless demonstrations.
-- **Business Viability:** Directly solves the enterprise trust barrier with AI by enforcing "blast radius" checks and code-enforced routing, ensuring the AI cannot accidentally take down critical infrastructure.
-- **Presentation & Clarity:** The project features a premium, cinematic landing page and a highly interactive "glassmorphism" dashboard that visualizes the AI's real-time thought process, complete with a Live AIIMS Delhi simulation replay.
-- **Impact & Scalability:** Designed to scale horizontally. The agent pipeline can ingest thousands of logs, filter the noise, and only escalate genuinely ambiguous events to human operators, drastically multiplying a security team's effectiveness.
+- **Business Impact (25%):** Directly solves the delayed detection problem in government entities. By acting as an Autonomous Incident Response Orchestrator (SOAR), it compresses MTTD and MTTR, preventing catastrophic downtime in critical infrastructure while enforcing "blast radius" thresholds to guarantee operational safety.
+- **Technical Excellence (25%):** A robust Next.js frontend paired with a custom Multi-Agent Node.js backend. Features real-time Socket.io communication, RAG/Knowledge Graph concepts for MITRE ATT&CK mapping, and seamless fallback data for flawless demonstrations. Ensures full auditability of every automated action taken.
+- **Innovation (20%):** Replaces traditional signature-based playbooks with an Agentic AI pipeline (Watcher, Investigator, Judge, Responder). It acts as an APT Campaign Attribution Agent, using LLMs to synthesize context rather than relying on brittle, known malware signatures.
+- **Scalability (15%):** Designed to scale horizontally across heterogeneous IT/OT environments. The agent pipeline can ingest millions of logs, filter the noise, and only escalate genuinely ambiguous events to human operators, drastically multiplying a security team's capacity.
+- **User Experience (15%):** The project features a premium, cinematic landing page and a highly interactive "glassmorphism" dashboard that visualizes the AI's real-time thought process, complete with a Live AIIMS Delhi ransomware simulation replay.
