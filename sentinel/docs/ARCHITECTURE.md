@@ -1,6 +1,6 @@
-# Sentinel Architecture Guide
+# WatchDog Architecture Guide
 
-Sentinel uses a multi-agent orchestration pipeline to investigate network anomalies and respond to threats.
+WatchDog uses a multi-agent orchestration pipeline to investigate network anomalies and respond to threats.
 
 ## 1. Pipeline Overview
 

@@ -151,7 +151,7 @@ export async function POST(req: Request) {
   } else {
     // Step 1: Intent extraction
     try {
-      const intentPrompt = `You are Warden's query router. Given a user's question, decide which function to call and with what parameters. Respond ONLY with JSON:
+      const intentPrompt = `You are WatchDog's query router. Given a user's question, decide which function to call and with what parameters. Respond ONLY with JSON:
 
 {
   "function": "get_case_by_ip | get_cases_by_asset | get_metrics | get_campaigns | get_recent_actions | unknown",
@@ -225,7 +225,7 @@ User question: "${message}"`;
   }
 
   try {
-    const answerPrompt = `You are Warden's assistant. Answer the user's question using ONLY the data below. If the data doesn't contain enough information to answer, say so clearly. Always cite case_id or campaign_id where relevant. Do not speculate beyond the provided data.
+    const answerPrompt = `You are WatchDog's assistant. Answer the user's question using ONLY the data below. If the data doesn't contain enough information to answer, say so clearly. Always cite case_id or campaign_id where relevant. Do not speculate beyond the provided data.
 
 User question: "${message}"
 Retrieved data: ${JSON.stringify(dbData, null, 2)}
@@ -286,7 +286,7 @@ function buildFallbackAnswer(question: string, data: any): string {
     return "I don't have enough information to answer that question. Try asking about a specific IP address, asset name, metrics, campaigns, or recent actions.";
   }
   if (data.type === 'metrics') {
-    return `Current Warden metrics: ${data.total_events} total events, ${data.auto_resolved} auto-resolved (${data.auto_resolve_rate} auto-resolve rate), ${data.human_escalated} escalated to human review, ${data.high_confidence_decisions} high-confidence decisions.`;
+    return `Current WatchDog metrics: ${data.total_events} total events, ${data.auto_resolved} auto-resolved (${data.auto_resolve_rate} auto-resolve rate), ${data.human_escalated} escalated to human review, ${data.high_confidence_decisions} high-confidence decisions.`;
   }
   if (data.type === 'campaigns') {
     if (data.count === 0) return 'No campaigns have been detected yet. Run the AIIMS replay and then trigger a correlation pass to detect campaigns.';

@@ -29,10 +29,10 @@ export function Sidebar() {
         }}
       >
         {/* Header / Logo */}
-        <div className="flex items-center gap-3 px-3 pt-2 pb-6">
+        <Link href="/" className="flex items-center gap-3 px-3 pt-2 pb-6 cursor-pointer hover:opacity-80 transition-opacity">
           <Shield className="w-6 h-6 text-white" />
-          <span className="text-[15px] font-bold tracking-[0.15em] uppercase text-white">Warden</span>
-        </div>
+          <span className="text-[15px] font-bold tracking-[0.15em] uppercase text-white">WatchDog</span>
+        </Link>
 
         {/* Navigation Items */}
         <div className="flex flex-col gap-1.5 flex-1">
@@ -79,7 +79,7 @@ export function Sidebar() {
           {/* Status Container */}
           <div className="flex items-center justify-between px-3 py-2">
             <div className="font-semibold text-white tracking-wide">
-              Warden
+              WatchDog
             </div>
 
             {/* Status indicator — green circle */}

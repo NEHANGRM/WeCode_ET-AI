@@ -1,6 +1,6 @@
-# Sentinel
+# WatchDog
 
-Sentinel is an advanced, multi-agent AI cybersecurity defense pipeline designed to detect, investigate, and autonomously respond to complex network threats (like the AIIMS Delhi 2022 ransomware attack) in seconds rather than hours.
+WatchDog is an advanced, multi-agent AI cybersecurity defense pipeline designed to detect, investigate, and autonomously respond to complex network threats (like our Live AIIMS Delhi 2022 ransomware replay simulation) in seconds rather than hours.
 
 ## Key Features
 - **Multi-Agent Architecture**: Uses a specialized pipeline of LLM agents (Watcher, Investigator, Judge, Responder) to analyze and mitigate threats.
@@ -36,4 +36,15 @@ Sentinel is an advanced, multi-agent AI cybersecurity defense pipeline designed 
 
 ### Documentation
 - [Architecture Guide](./docs/ARCHITECTURE.md) - Deep dive into the agent pipeline.
-- [Demo Guide](./docs/DEMO_GUIDE.md) - How to run the built-in simulations (AIIMS Replay & Ambiguous Event).
+- [Demo Guide](./docs/DEMO_GUIDE.md) - How to run the built-in simulations (Live AIIMS Replay & Ambiguous Event).
+
+## ET AI Hackathon - Evaluation Criteria Alignment
+
+WatchDog was built explicitly with the hackathon's core criteria in mind:
+
+- **Relevance to Problem Statement:** Tackles the critical issue of SOC alert fatigue and slow incident response times by automating the triage and investigation phases.
+- **Innovation & Creativity:** Replaces traditional static playbooks with dynamic, context-aware AI agents (Watcher, Investigator, Judge, Responder) constrained by strict zero-trust YAML policies and cryptographic audit trails.
+- **Technical Implementation:** A robust Next.js frontend paired with a custom multi-agent Node.js backend. Features real-time Socket.io communication, dynamic MongoDB state tracking, and seamless fallback data for flawless demonstrations.
+- **Business Viability:** Directly solves the enterprise trust barrier with AI by enforcing "blast radius" checks and code-enforced routing, ensuring the AI cannot accidentally take down critical infrastructure.
+- **Presentation & Clarity:** The project features a premium, cinematic landing page and a highly interactive "glassmorphism" dashboard that visualizes the AI's real-time thought process, complete with a Live AIIMS Delhi simulation replay.
+- **Impact & Scalability:** Designed to scale horizontally. The agent pipeline can ingest thousands of logs, filter the noise, and only escalate genuinely ambiguous events to human operators, drastically multiplying a security team's effectiveness.

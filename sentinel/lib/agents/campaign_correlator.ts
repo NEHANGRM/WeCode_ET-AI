@@ -137,10 +137,10 @@ export async function runCampaignCorrelator(): Promise<CampaignCorrelatorResult>
       const result = await analyzeGroupWithLLM(group);
 
       if (result && result.campaign_detected) {
-        // Check if we already have this exact campaign (same involved cases)
-        const caseIdsSorted = result.involved_case_ids.sort().join(',');
+        // Check if we already have an active campaign for this source group
         const existing = await Campaign.findOne({
-          involved_case_ids: { $all: result.involved_case_ids }
+          source_group: group.groupKey,
+          status: 'active'
         });
 
         if (!existing) {
@@ -150,10 +150,7 @@ export async function runCampaignCorrelator(): Promise<CampaignCorrelatorResult>
             confidence: result.confidence,
             attack_chain_narrative: result.attack_chain_narrative,
             mitre_chain: result.mitre_chain || [],
-            involved_case_ids: result.involved_case_ids.map((id: string) => {
-              // Convert string ids back to ObjectId-compatible format
-              return id;
-            }),
+            involved_case_ids: result.involved_case_ids,
             status: 'active',
             reasoning: result.reasoning,
             source_group: group.groupKey
@@ -170,7 +167,24 @@ export async function runCampaignCorrelator(): Promise<CampaignCorrelatorResult>
 
           console.log(`[Correlator] Campaign detected: ${campaign.campaign_id} (confidence: ${result.confidence}%)`);
         } else {
-          console.log(`[Correlator] Campaign already exists for group ${group.groupKey} — skipping`);
+          // Update the existing campaign with new cases and evolved narrative
+          existing.involved_case_ids = Array.from(new Set([...existing.involved_case_ids, ...result.involved_case_ids]));
+          existing.confidence = Math.max(existing.confidence, result.confidence);
+          existing.attack_chain_narrative = result.attack_chain_narrative;
+          existing.mitre_chain = result.mitre_chain || existing.mitre_chain;
+          existing.reasoning = result.reasoning;
+          await existing.save();
+
+          detectedCampaigns.push({
+            campaign_id: existing.campaign_id,
+            confidence: existing.confidence,
+            attack_chain_narrative: existing.attack_chain_narrative,
+            mitre_chain: existing.mitre_chain,
+            involved_case_ids: existing.involved_case_ids,
+            source_group: group.groupKey,
+            updated: true
+          });
+          console.log(`[Correlator] Updated existing campaign ${existing.campaign_id} for ${group.groupKey}`);
         }
       }
     }

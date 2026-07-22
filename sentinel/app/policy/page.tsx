@@ -39,7 +39,7 @@ export default function PolicyPage() {
             </h2>
             <p className="text-[var(--color-text-muted)] text-sm mt-1">
               Every automated action is constrained by this policy file before execution. 
-              Displayed live — this is the actual file Warden reads at runtime.
+              Displayed live — this is the actual file WatchDog reads at runtime.
             </p>
           </div>
 

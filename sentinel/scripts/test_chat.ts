@@ -119,7 +119,7 @@ async function test_metrics_query() {
   console.log('\n[TEST D] Metrics query');
 
   try {
-    const result = await chatQuery('How many total events does Warden have?');
+    const result = await chatQuery('How many total events does WatchDog have?');
     const hasNumber = /\d+/.test(result.answer);
 
     console.log(`  Answer: "${result.answer.substring(0, 200)}"`);

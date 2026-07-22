@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/ui/Sidebar";
-import { ChatCopilot } from "@/app/dashboard/components/ChatCopilot";
+import { LayoutWrapper } from "./LayoutWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -10,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Warden | Cyber-Defense",
+  title: "WatchDog | Cyber-Defense",
   description: "Autonomous Cyber Defense System",
 };
 
@@ -74,15 +73,9 @@ export default function RootLayout({
           />
         </div>
 
-        <div className="flex flex-1 overflow-hidden z-0 p-5 gap-5">
-          <Sidebar />
-          <main className="flex-1 overflow-y-auto relative rounded-3xl bg-white/10 shadow-xl border border-white/20 backdrop-blur-md">
-            {children}
-          </main>
-        </div>
-        
-        {/* Chat Copilot — global floating overlay */}
-        <ChatCopilot />
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   );

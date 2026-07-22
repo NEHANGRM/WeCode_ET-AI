@@ -1,8 +1,9 @@
 'use client';
 import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertOctagon, ChevronDown, ChevronUp, RefreshCw, Loader2, ShieldAlert, CheckCircle2, Link2 } from 'lucide-react';
+import { AlertOctagon, ChevronDown, ChevronUp, RefreshCw, Loader2, ShieldAlert, CheckCircle2, Link2, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
 
 interface Campaign {
   _id: string;
@@ -208,10 +209,17 @@ export function CampaignAlerts() {
                         ))}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 pt-1">
+                    <div className="flex items-center justify-between pt-2">
                       <span className="text-xs text-gray-500">
                         Detected: {new Date(campaign.detected_at).toLocaleString()}
                       </span>
+                      <Link
+                        href={`/dashboard/campaigns/${campaign.campaign_id}`}
+                        className="flex items-center gap-1.5 text-xs font-semibold bg-orange-600 hover:bg-orange-500 text-white shadow-lg shadow-orange-900/20 px-4 py-2 rounded-lg transition-all cursor-pointer z-10"
+                      >
+                        View Campaign
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </Link>
                     </div>
                   </div>
                 </motion.div>

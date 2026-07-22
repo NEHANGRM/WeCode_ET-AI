@@ -1,6 +1,6 @@
-# Sentinel Demo Guide
+# WatchDog Demo Guide
 
-The Sentinel dashboard comes with built-in simulations to help you test the pipeline and UI.
+The WatchDog dashboard comes with built-in simulations to help you test the pipeline and UI.
 
 ## 1. AIIMS Delhi Ransomware Replay
 Clicking **"Replay AIIMS Delhi Attack"** on the dashboard will inject a 4-phase attack sequence into the system.
@@ -21,7 +21,7 @@ To guarantee you can test the **Human Review Queue** UI, the `Judge` agent is ha
 Because the score falls between 40 and 80, the strict code-enforced pipeline will flag the event as `suspicious` and route it to your **Human Review Queue**, waiting for you to manually click "Approve" or "Dismiss".
 
 ## 3. Threat Intelligence Simulations
-To ensure the pipeline functions seamlessly out-of-the-box without requiring 3rd-party API keys, Sentinel uses **simulated fallback data** for Threat Intelligence integrations.
+To ensure the pipeline functions seamlessly out-of-the-box without requiring 3rd-party API keys, WatchDog uses **simulated fallback data** for Threat Intelligence integrations.
 
 When the `Investigator` agent runs, it attempts to fetch data from:
 - **GreyNoise** (Internet background noise / targeted attack classification)
@@ -35,3 +35,4 @@ If your dashboard gets too cluttered with events, you can wipe the MongoDB clust
 ```bash
 node migrate.js
 ```
+

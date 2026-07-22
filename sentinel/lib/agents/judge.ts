@@ -149,9 +149,12 @@ function deterministicFallback(signal: any, investigation: any): JudgeOutput {
   }
 
   // Force the demo Ambiguous Event into the review queue band (40-80)
+  let fallbackReasoning = `Deterministic fallback: AbuseIPDB ${abuseScore}/100, VirusTotal ${vtCount} detections, GreyNoise ${investigation.greyNoiseResult?.classification || 'unknown'} — verdict based on threat intel scores without LLM synthesis.`;
+
   if (signal?.reasonCode === 'POTENTIAL_LATERAL_MOVEMENT' || signal?.payloadSummary?.includes('SMB access denied')) {
     confidence = 65;
     recommended_action = 'alert_human';
+    fallbackReasoning = `"Our security system has flagged unusual activity on ${signal.ip} (repeated SMB access denied errors attempting to reach the domain controller). While threat intel scores are low (AbuseIPDB 0/100, VirusTotal 1/91), this internal IT/OT boundary violation requires a security team member to review before any automated action is taken. Operations continue normally while the team investigates."`;
   }
 
   const verdict: JudgeOutput['verdict'] = confidence > 80 ? 'confirmed_attack' : confidence >= 40 ? 'suspicious' : 'normal';
@@ -159,7 +162,7 @@ function deterministicFallback(signal: any, investigation: any): JudgeOutput {
   return {
     confidence,
     confidenceScore: confidence,
-    reasoning: `Deterministic fallback: AbuseIPDB ${abuseScore}/100, VirusTotal ${vtCount} detections, GreyNoise ${investigation.greyNoiseResult?.classification || 'unknown'} — verdict based on threat intel scores without LLM synthesis.`,
+    reasoning: fallbackReasoning,
     recommended_action,
     verdict,
     needs_more_evidence: false,

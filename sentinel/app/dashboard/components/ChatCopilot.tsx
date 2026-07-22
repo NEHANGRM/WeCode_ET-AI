@@ -24,7 +24,7 @@ export function ChatCopilot() {
   const DEFAULT_MESSAGE: Message = {
     id: 'welcome',
     role: 'assistant',
-    content: "Hi! I'm **Warden's Copilot**. Ask me anything about your cases, metrics, campaigns, or specific IP addresses. I only answer using real data from your database.",
+    content: "Hi! I'm **WatchDog's Copilot**. Ask me anything about your cases, metrics, campaigns, or specific IP addresses. I only answer using real data from your database.",
     sources: []
   };
 
@@ -38,7 +38,7 @@ export function ChatCopilot() {
   // Load from sessionStorage on mount
   useEffect(() => {
     setIsClient(true);
-    const saved = sessionStorage.getItem('warden_copilot_chat');
+    const saved = sessionStorage.getItem('watchdog_copilot_chat');
     if (saved) {
       try {
         setMessages(JSON.parse(saved));
@@ -51,7 +51,7 @@ export function ChatCopilot() {
   // Save to sessionStorage on update
   useEffect(() => {
     if (isClient) {
-      sessionStorage.setItem('warden_copilot_chat', JSON.stringify(messages));
+      sessionStorage.setItem('watchdog_copilot_chat', JSON.stringify(messages));
     }
   }, [messages, isClient]);
 
@@ -156,7 +156,7 @@ export function ChatCopilot() {
                   <Bot className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">Warden Copilot</p>
+                  <p className="text-sm font-semibold text-white">WatchDog Copilot</p>
                   <p className="text-xs text-emerald-400">Database-grounded answers only</p>
                 </div>
               </div>

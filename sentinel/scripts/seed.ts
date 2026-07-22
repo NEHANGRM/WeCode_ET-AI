@@ -5,6 +5,7 @@ import { Investigation } from '../lib/db/models/Investigation';
 import { Judgment } from '../lib/db/models/Judgment';
 import { Action } from '../lib/db/models/Action';
 import { AuditRecord } from '../lib/db/models/AuditRecord';
+import { Campaign } from '../lib/db/models/Campaign';
 import { appendToChain } from '../lib/hashChain';
 
 const SCENARIOS = [
@@ -307,7 +308,8 @@ async function seed() {
     Investigation.deleteMany({}),
     Judgment.deleteMany({}),
     Action.deleteMany({}),
-    AuditRecord.deleteMany({})
+    AuditRecord.deleteMany({}),
+    Campaign.deleteMany({})
   ]);
 
   console.log(`Seeding ${SCENARIOS.length} scenarios...`);
