@@ -83,8 +83,22 @@ npm run dev
 ## 🎬 Demo Flow
 
 1. **Cold open** — Dashboard shows pipeline monitoring.
-2. **Trigger Simulation** — Click the simulation button. A seeded case runs through the full pipeline, with the Agent Graph lighting up node by node in real time via WebSockets.
-3. **Retry in action** — An intentionally ambiguous seeded case triggers the confidence-gated retry loop, escalating to the Review Queue.
+2. **Trigger Simulation (Live AIIMS Delhi Replay)** — Click the "Replay AIIMS Delhi Attack" button. A seeded 4-stage ransomware attack (Reconnaissance, Credential Attack, Lateral Movement, Ransomware Staging) runs through the full pipeline. Because this is a high-severity threat mimicking the catastrophic 2022 breach, the Judge assigns a confidence > 80, and the Responder auto-blocks the threat without human intervention. The Agent Graph lights up node by node in real time via WebSockets.
+3. **Trigger Ambiguous Event (Human Review)** — Click the "Ambiguous Event" button. An intentionally ambiguous seeded case (repeated failed SMB logins) triggers the confidence-gated routing. The Judge assigns it a 65, which automatically pauses the AI execution and escalates it to the Human Review Queue for an analyst to approve.
+
+## 🚧 What's Real vs. Simulated (Hardcoded)
+
+To ensure a flawless presentation environment, some elements of the project use simulated fallback data:
+
+| Component | Status |
+|---|---|
+| Multi-Agent Orchestration | ✅ Fully functional async pipeline |
+| LLM Synthesis & Scoring | ✅ Fully functional (Gemini 2.5 Flash) |
+| Confidence-gated routing | ✅ Fully functional |
+| Blast-Radius Checking | ✅ Fully functional (Validates against `assets.json` and `policy.json`) |
+| AbuseIPDB / GN Threat Intel | ⚠️ Simulated fallback data (Mock responses triggered for the AIIMS Demo IP `185.150.11.23` to guarantee demo reliability without requiring API keys) |
+| Remediation actions | ⚠️ Logged to the database and UI — no real network/firewall drops executed |
+| Network Telemetry / Logs | ⚠️ Hardcoded payloads injected into the database via the UI Simulation buttons |
 
 ## 👥 Team
 - Naren Moorthy S
