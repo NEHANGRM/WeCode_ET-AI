@@ -1,6 +1,6 @@
 # WatchDog
 
-WatchDog is an AI-powered Cyber Resilience platform for critical national infrastructure. It autonomously detects behavioural anomalies, correlates weak signals across heterogeneous IT and OT environments, maps attack progression against MITRE ATT&CK, and orchestrates containment actions—compressing Mean Time To Detect (MTTD) and Mean Time To Respond (MTTR) from weeks to hours.
+WatchDog is an AI-powered Cyber Resilience platform for critical national infrastructure. It autonomously and efficiently detects behavioural anomalies, correlates weak signals across heterogeneous IT and OT environments, maps attack progression against MITRE ATT&CK, and orchestrates containment actions—compressing Mean Time To Detect (MTTD) and Mean Time To Respond (MTTR) from weeks to hours.
 
 ## Key Features
 - **Multi-Agent Architecture**: Uses a specialized pipeline of LLM agents (Watcher, Investigator, Judge, Responder) to analyze and mitigate threats.
